@@ -25,7 +25,7 @@ Material UI React
 
 ## Post Installation Checks
 1) If successful the following routes are available to view
-  /dashboard
-  /home
-  /register
-  /login
+* /dashboard
+* /home
+* /register
+* /login
