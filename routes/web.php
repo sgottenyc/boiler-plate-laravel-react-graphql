@@ -11,11 +11,7 @@
 |
 */
 
-/* remove 
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 /* Wild card so all routes goes to app view template */
-Route::view('/{path?}', 'login');
+Route::view('/', 'login');
+
+Route::view('/home', 'home');

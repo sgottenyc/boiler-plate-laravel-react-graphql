@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Login from './Login'
+import Dashboard from './Dashboard'
 
-
-class App extends Component {
+class Home extends Component {
   render () {
     return (
-      <BrowserRouter>
         <div>
-          <Login />
+          <Dashboard />
         </div>
-      </BrowserRouter>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<Home />, document.getElementById('app'))
