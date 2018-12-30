@@ -90036,6 +90036,16 @@ function ProfileForm() {
     label: "Country",
     fullWidth: true,
     autoComplete: "billing country"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    item: true,
+    xs: 12
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_FormControlLabel__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    control: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Checkbox__WEBPACK_IMPORTED_MODULE_5___default.a, {
+      color: "secondary",
+      name: "saveAddress",
+      value: "yes"
+    }),
+    label: "I understand and agreed to the terms of use and conditions agreement."
   }))));
 }
 
@@ -90152,7 +90162,7 @@ var styles = function styles(theme) {
   };
 };
 
-var steps = ['Profile Info', 'Terms and Conditions', 'Confirmation'];
+var steps = ['Profile Info', 'Access', 'Confirmation'];
 
 function getStepContent(step) {
   switch (step) {

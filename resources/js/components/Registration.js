@@ -51,7 +51,7 @@ const styles = theme => ({
   },
 });
 
-const steps = ['Profile Info', 'Terms and Conditions', 'Confirmation'];
+const steps = ['Profile Info', 'Access', 'Confirmation'];
 
 function getStepContent(step) {
   switch (step) {

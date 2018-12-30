@@ -84,6 +84,12 @@ function ProfileForm() {
             autoComplete="billing country"
           />
         </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
+            label="I understand and agreed to the terms of use and conditions agreement."
+          />
+        </Grid>
       </Grid>
     </React.Fragment>
   );
