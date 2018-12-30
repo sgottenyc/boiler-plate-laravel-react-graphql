@@ -13,4 +13,4 @@ class RegisterPage extends Component {
   }
 }
 
-ReactDOM.render(<Registration />, document.getElementById('app'))
+ReactDOM.render(<RegisterPage />, document.getElementById('app'))

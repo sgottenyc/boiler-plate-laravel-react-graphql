@@ -21,3 +21,6 @@ Route::view('/home', 'home');
 Route::view('/checkout', 'checkout');
 
 Route::view('/dashboard', 'dashboard');
+
+Route::view('/register', 'register');
+
