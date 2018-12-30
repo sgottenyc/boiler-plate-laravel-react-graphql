@@ -14,4 +14,10 @@
 /* Wild card so all routes goes to app view template */
 Route::view('/', 'login');
 
+Route::view('/login', 'login');
+
 Route::view('/home', 'home');
+
+Route::view('/checkout', 'checkout');
+
+Route::view('/dashboard', 'dashboard');

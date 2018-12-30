@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -120496,10 +120496,10 @@ SimpleTable.propTypes = {
 
 /***/ }),
 
-/***/ "./resources/js/containers/Home.js":
-/*!*****************************************!*\
-  !*** ./resources/js/containers/Home.js ***!
-  \*****************************************/
+/***/ "./resources/js/containers/Dashboard.js":
+/*!**********************************************!*\
+  !*** ./resources/js/containers/Dashboard.js ***!
+  \**********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -120534,35 +120534,35 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Home =
+var DashboardPage =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Home, _Component);
+  _inherits(DashboardPage, _Component);
 
-  function Home() {
-    _classCallCheck(this, Home);
+  function DashboardPage() {
+    _classCallCheck(this, DashboardPage);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Home).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(DashboardPage).apply(this, arguments));
   }
 
-  _createClass(Home, [{
+  _createClass(DashboardPage, [{
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"], null));
     }
   }]);
 
-  return Home;
+  return DashboardPage;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Home, null), document.getElementById('app'));
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DashboardPage, null), document.getElementById('app'));
 
 /***/ }),
 
-/***/ "./resources/js/main.js":
-/*!******************************!*\
-  !*** ./resources/js/main.js ***!
-  \******************************/
+/***/ "./resources/js/dashboard.js":
+/*!***********************************!*\
+  !*** ./resources/js/dashboard.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -120579,18 +120579,18 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
-__webpack_require__(/*! ./containers/Home */ "./resources/js/containers/Home.js");
+__webpack_require__(/*! ./containers/Dashboard */ "./resources/js/containers/Dashboard.js");
 
 /***/ }),
 
-/***/ 1:
-/*!************************************!*\
-  !*** multi ./resources/js/main.js ***!
-  \************************************/
+/***/ 3:
+/*!*****************************************!*\
+  !*** multi ./resources/js/dashboard.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/dashboard.js */"./resources/js/dashboard.js");
 
 
 /***/ })

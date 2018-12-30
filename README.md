@@ -22,3 +22,10 @@ Material UI React
 2) Update .env file with database credential
 3) Run php artisan migrate command to add demo data and tables for this project demo
 4) Run php artisan preset react to set laravel to use react
+
+## Post Installation Checks
+1) If successful the following routes are available to view
+  /dashboard
+  /home
+  /register
+  /login

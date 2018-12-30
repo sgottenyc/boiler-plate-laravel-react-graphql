@@ -13,6 +13,9 @@ const mix = require('laravel-mix');
 
 mix.react('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
-
 mix.react('resources/js/main.js', 'public/js');
+mix.react('resources/js/checkout.js', 'public/js');
+mix.react('resources/js/dashboard.js', 'public/js');
+mix.react('resources/js/register.js', 'public/js');
+
 
