@@ -1838,7 +1838,8 @@ var styles = function styles(theme) {
     rippleVisible: {
       opacity: 0.3,
       transform: 'scale(1)',
-      animation: "mui-ripple-enter ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut)
+      animation: "mui-ripple-enter ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut),
+      animationName: '$mui-ripple-enter'
     },
 
     /* Styles applied to the internal `Ripple` components `ripplePulsate` class. */
@@ -1859,7 +1860,8 @@ var styles = function styles(theme) {
     /* Styles applied to the internal `Ripple` components `childLeaving` class. */
     childLeaving: {
       opacity: 0,
-      animation: "mui-ripple-exit ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut)
+      animation: "mui-ripple-exit ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut),
+      animationName: '$mui-ripple-exit'
     },
 
     /* Styles applied to the internal `Ripple` components `childPulsate` class. */
@@ -1867,7 +1869,8 @@ var styles = function styles(theme) {
       position: 'absolute',
       left: 0,
       top: 0,
-      animation: "mui-ripple-pulsate 2500ms ".concat(theme.transitions.easing.easeInOut, " 200ms infinite")
+      animation: "mui-ripple-pulsate 2500ms ".concat(theme.transitions.easing.easeInOut, " 200ms infinite"),
+      animationName: '$mui-ripple-pulsate'
     },
     '@keyframes mui-ripple-enter': {
       '0%': {
@@ -1997,7 +2000,7 @@ function (_React$PureComponent) {
             rippleSize: rippleSize,
             cb: cb
           });
-        }; // Deplay the execution of the ripple effect.
+        }; // Delay the execution of the ripple effect.
 
 
         _this.startTimer = setTimeout(function () {
@@ -2468,8 +2471,6 @@ var _withStyles = _interopRequireDefault(__webpack_require__(/*! ../styles/withS
 
 var _colorManipulator = __webpack_require__(/*! ../styles/colorManipulator */ "./node_modules/@material-ui/core/styles/colorManipulator.js");
 
-var _chainPropTypes = _interopRequireDefault(__webpack_require__(/*! ../utils/chainPropTypes */ "./node_modules/@material-ui/core/utils/chainPropTypes.js"));
-
 var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -2554,7 +2555,7 @@ function Divider(props) {
    * __WARNING__: `inset` is deprecated.
    * Instead use `variant="inset"`.
    */
-  inset: (0, _chainPropTypes.default)(_propTypes.default.bool, function (props) {
+  inset: (0, _utils.chainPropTypes)(_propTypes.default.bool, function (props) {
     /* istanbul ignore if */
     if (props.inset) {
       return new Error('Material-UI: you are using the deprecated `inset` property ' + 'that will be removed in the next major release. The property `variant="inset"` ' + 'is equivalent and should be used instead.');
@@ -3717,7 +3718,7 @@ var styles = function styles(theme) {
     /* Styles applied to the `component` element if `children` includes `ListItemSecondaryAction`. */
     secondaryAction: {
       // Add some space to avoid collision as `ListItemSecondaryAction`
-      // is absolutely positionned.
+      // is absolutely positioned.
       paddingRight: 32
     },
 
@@ -4168,7 +4169,8 @@ function ListItemText(props) {
       primaryTypographyProps = props.primaryTypographyProps,
       secondaryProp = props.secondary,
       secondaryTypographyProps = props.secondaryTypographyProps,
-      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps"]);
+      theme = props.theme,
+      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps", "theme"]);
   return _react.default.createElement(_ListContext.default.Consumer, null, function (_ref) {
     var _classNames3;
 
@@ -4177,8 +4179,7 @@ function ListItemText(props) {
 
     if (primary != null && primary.type !== _Typography.default && !disableTypography) {
       primary = _react.default.createElement(_Typography.default, (0, _extends2.default)({
-        variant: "subheading",
-        internalDeprecatedVariant: true,
+        variant: theme.typography.useNextVariants ? 'body1' : 'subheading',
         className: (0, _classnames.default)(classes.primary, (0, _defineProperty2.default)({}, classes.textDense, dense)),
         component: "span"
       }, primaryTypographyProps), primary);
@@ -4250,7 +4251,12 @@ function ListItemText(props) {
    * These props will be forwarded to the secondary typography component
    * (as long as disableTypography is not `true`).
    */
-  secondaryTypographyProps: _propTypes.default.object
+  secondaryTypographyProps: _propTypes.default.object,
+
+  /**
+   * @ignore
+   */
+  theme: _propTypes.default.object.isRequired
 } : undefined;
 ListItemText.defaultProps = {
   disableTypography: false,
@@ -4258,7 +4264,8 @@ ListItemText.defaultProps = {
 };
 
 var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiListItemText'
+  name: 'MuiListItemText',
+  withTheme: true
 })(ListItemText);
 
 exports.default = _default;
@@ -4575,6 +4582,16 @@ if ( true && !_react.default.createContext) {
   throw new Error('Material-UI: react@16.3.0 or greater is required.');
 }
 /**
+ * Modal is a lower-level construct that is leveraged by the following components:
+ *
+ * - [Dialog](/api/dialog/)
+ * - [Drawer](/api/drawer/)
+ * - [Menu](/api/menu/)
+ * - [Popover](/api/popover/)
+ *
+ * If you are creating a modal dialog, you probably want to use the [Dialog](/api/dialog/) component
+ * rather than directly using Modal.
+ *
  * This component shares many concepts with [react-overlays](https://react-bootstrap.github.io/react-overlays/#modals).
  */
 
@@ -5093,7 +5110,7 @@ function removeContainerStyle(data) {
 /**
  * @ignore - do not document.
  *
- * Proper state managment for containers and the modals in those containers.
+ * Proper state management for containers and the modals in those containers.
  * Simplified, but inspired by react-overlay's ModalManager class.
  * Used by the Modal to ensure proper styling of containers.
  */
@@ -5204,7 +5221,7 @@ function () {
 
         this.data.splice(containerIdx, 1);
       } else if (this.hideSiblingNodes) {
-        // Otherwise make sure the next top modal is visible to a screan reader.
+        // Otherwise make sure the next top modal is visible to a screen reader.
         var nextTop = data.modals[data.modals.length - 1]; // as soon as a modal is adding its modalRef is undefined. it can't set
         // aria-hidden because the dom element doesn't exist either
         // when modal was unmounted before modalRef gets null
@@ -5328,14 +5345,14 @@ exports.ariaHidden = ariaHidden;
 exports.ariaHiddenSiblings = ariaHiddenSiblings;
 var BLACKLIST = ['template', 'script', 'style'];
 
-function isHidable(node) {
+function isHideable(node) {
   return node.nodeType === 1 && BLACKLIST.indexOf(node.tagName.toLowerCase()) === -1;
 }
 
 function siblings(container, mount, currentNode, callback) {
   var blacklist = [mount, currentNode];
   [].forEach.call(container.children, function (node) {
-    if (blacklist.indexOf(node) === -1 && isHidable(node)) {
+    if (blacklist.indexOf(node) === -1 && isHideable(node)) {
       callback(node);
     }
   });
@@ -5434,7 +5451,7 @@ function (_React$Component) {
         // Wondering why we use two RAFs? Check this video out:
         // https://www.youtube.com/watch?v=cCOL7MC4Pl0
         requestAnimationFrame(function () {
-          // The browser should be about to render the DOM that React commited at this point.
+          // The browser should be about to render the DOM that React committed at this point.
           // We don't want to interrupt. Let's wait the next raf.
           requestAnimationFrame(function () {
             if (_this2.mounted) {
@@ -7701,8 +7718,6 @@ var _withStyles = _interopRequireDefault(__webpack_require__(/*! ../styles/withS
 
 var _helpers = __webpack_require__(/*! ../utils/helpers */ "./node_modules/@material-ui/core/utils/helpers.js");
 
-var _chainPropTypes = _interopRequireDefault(__webpack_require__(/*! ../utils/chainPropTypes */ "./node_modules/@material-ui/core/utils/chainPropTypes.js"));
-
 var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -7991,7 +8006,7 @@ function Typography(props) {
    * Applies the theme typography styles.
    * Use `body1` as the default value with the legacy implementation and `body2` with the new one.
    */
-  variant: (0, _chainPropTypes.default)(_propTypes.default.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'button', 'overline', 'srOnly', 'inherit', // deprecated
+  variant: (0, _utils.chainPropTypes)(_propTypes.default.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'button', 'overline', 'srOnly', 'inherit', // deprecated
   'display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading']), function (props) {
     var deprecatedVariants = ['display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading'];
 
@@ -9483,7 +9498,7 @@ function createTypography(palette, typography) {
     subtitle2: buildVariant(fontWeightMedium, 14, 1.57, 0.1),
     body1Next: buildVariant(fontWeightRegular, 16, 1.5, 0.15),
     body2Next: buildVariant(fontWeightRegular, 14, 1.5, 0.15),
-    buttonNext: buildVariant(fontWeightMedium, 14, 1.5, 0.4, caseAllCaps),
+    buttonNext: buildVariant(fontWeightMedium, 14, 1.3125, 0.4, caseAllCaps),
     captionNext: buildVariant(fontWeightRegular, 12, 1.66, 0.4),
     overline: buildVariant(fontWeightRegular, 12, 2.66, 1, caseAllCaps)
   }; // To remove in v4
@@ -10252,7 +10267,7 @@ var generateClassName = (0, _createGenerateClassName.default)(); // Global index
 // We create the style sheet during at the creation of the component,
 // children are handled after the parents, so the order of style elements would be parent->child.
 // It is a problem though when a parent passes a className
-// which needs to override any childs styles.
+// which needs to override any child's styles.
 // StyleSheet of the child has a higher specificity, because of the source order.
 // So our solution is to render sheets them in the reverse order child->sheet, so
 // that parent has a higher specificity.
@@ -10791,35 +10806,6 @@ function getTransitionProps(props, options) {
     delay: style.transitionDelay
   };
 }
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/utils/chainPropTypes.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@material-ui/core/utils/chainPropTypes.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function chainPropTypes(propType1, propType2) {
-  /* istanbul ignore if */
-  if (false) {}
-
-  return function validate() {
-    return propType1.apply(void 0, arguments) || propType2.apply(void 0, arguments);
-  };
-}
-
-var _default = chainPropTypes;
-exports.default = _default;
 
 /***/ }),
 
@@ -11658,6 +11644,35 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/utils/chainPropTypes.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@material-ui/utils/chainPropTypes.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function chainPropTypes(propType1, propType2) {
+  /* istanbul ignore if */
+  if (false) {}
+
+  return function validate() {
+    return propType1.apply(void 0, arguments) || propType2.apply(void 0, arguments);
+  };
+}
+
+var _default = chainPropTypes;
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/utils/componentPropType.js":
 /*!**************************************************************!*\
   !*** ./node_modules/@material-ui/utils/componentPropType.js ***!
@@ -11677,7 +11692,8 @@ exports.default = void 0;
 
 var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js"));
 
-var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+var _reactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+
 /**
  * A factory that returns a propTypes validator that only accepts values that
  * are also accepted by React.createElement
@@ -11686,8 +11702,6 @@ var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index
  * @param {boolean} isRequired If `true` returns a validator
  *                             that will throw if nullish values are passed
  */
-
-
 function createComponentProp(isRequired) {
   /* istanbul ignore if */
   if (false) {}
@@ -11701,7 +11715,7 @@ function createComponentProp(isRequired) {
       if (isRequired) {
         message = "The ".concat(location, " `").concat(propName, "` is marked as required in `").concat(componentName, "`, ") + "but its value is `".concat((0, _typeof2.default)(prop), "`.");
       }
-    } else if (!ReactIs.isValidElementType(prop)) {
+    } else if (!(0, _reactIs.isValidElementType)(prop)) {
       var preciseType = (0, _typeof2.default)(prop);
       message = "Invalid ".concat(location, " `").concat(propName, "` of type `").concat(preciseType, "` ") + "supplied to `".concat(componentName, "`, expected a component.");
     }
@@ -11822,7 +11836,7 @@ exports.default = _default;
 /*!*****************************************************!*\
   !*** ./node_modules/@material-ui/utils/index.es.js ***!
   \*****************************************************/
-/*! exports provided: componentPropType, exactProp, getDisplayName, ponyfillGlobal */
+/*! exports provided: componentPropType, chainPropTypes, exactProp, getDisplayName, ponyfillGlobal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11830,20 +11844,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componentPropType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./componentPropType */ "./node_modules/@material-ui/utils/componentPropType.js");
 /* harmony import */ var _componentPropType__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_componentPropType__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "componentPropType", function() { return _componentPropType__WEBPACK_IMPORTED_MODULE_0___default.a; });
-/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./exactProp */ "./node_modules/@material-ui/utils/exactProp.js");
-/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_exactProp__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "exactProp", function() { return _exactProp__WEBPACK_IMPORTED_MODULE_1___default.a; });
-/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getDisplayName */ "./node_modules/@material-ui/utils/getDisplayName.js");
-/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_getDisplayName__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "getDisplayName", function() { return _getDisplayName__WEBPACK_IMPORTED_MODULE_2___default.a; });
-/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ponyfillGlobal */ "./node_modules/@material-ui/utils/ponyfillGlobal.js");
-/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "ponyfillGlobal", function() { return _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3___default.a; });
-/** @license Material-UI v3.0.0-alpha.1
+/* harmony import */ var _chainPropTypes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chainPropTypes */ "./node_modules/@material-ui/utils/chainPropTypes.js");
+/* harmony import */ var _chainPropTypes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_chainPropTypes__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "chainPropTypes", function() { return _chainPropTypes__WEBPACK_IMPORTED_MODULE_1___default.a; });
+/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./exactProp */ "./node_modules/@material-ui/utils/exactProp.js");
+/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_exactProp__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "exactProp", function() { return _exactProp__WEBPACK_IMPORTED_MODULE_2___default.a; });
+/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./getDisplayName */ "./node_modules/@material-ui/utils/getDisplayName.js");
+/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_getDisplayName__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "getDisplayName", function() { return _getDisplayName__WEBPACK_IMPORTED_MODULE_3___default.a; });
+/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ponyfillGlobal */ "./node_modules/@material-ui/utils/ponyfillGlobal.js");
+/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "ponyfillGlobal", function() { return _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4___default.a; });
+/** @license Material-UI v3.0.0-alpha.2
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 
 
 
@@ -120590,7 +120608,7 @@ __webpack_require__(/*! ./containers/Dashboard */ "./resources/js/containers/Das
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/dashboard.js */"./resources/js/dashboard.js");
+module.exports = __webpack_require__(/*! C:\VMShare\laravelgraphql\resources\js\dashboard.js */"./resources/js/dashboard.js");
 
 
 /***/ })
