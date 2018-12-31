@@ -25,6 +25,11 @@ This project will demostrate how to integrate these technologies together to bui
 2) Git clone "git clone https://github.com/jjc704/boiler-plate-laravel-react-graphql.git . "
 2) Run "composer update"
 3) Run "npm update"
+4) copy file .env.example to file .env
+5) Run "php artisan key:generate" to generate key into the .env file
+6) Run "php artsian cache:clear" to clear cache
+7) Run "php artisan config:clear" to clear configuration
+8) Run "php artisan migrate" to migrate local database
 
 ## Installation from scratch (codeanywhere.com container)
 1) Create new laravel project
