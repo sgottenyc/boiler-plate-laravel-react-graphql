@@ -1,27 +1,37 @@
-# Boiler Plate Laravel Project using the following packages to build SPA
+# Boiler Plate Laravel Project 
 
-GraphQL
-React
-Redux
-Redux Form
-Material UI React
+The objective for this project is to jump start building SPA application using React, Redux, GraphQL and Laravel.
+This project will demostrate how to integrate these technologies together.
 
-# Required software
+##PHP Composer Packages
+* GraphQL
+
+## NPM Packages
+* React
+* Redux
+* Redux Form
+* Material UI React
+* Webpack
+
+## Required installation
 1) Git
-2) Nodejs
-3) PHP
-4) Compatible database with PHP
+2) NodeJs
+3) PHP 7.2+
+4) Composer
+5) Database (mysql, sql server, etc see laravel.com for installation)
 
-# Installation after downloading from git
-1) Git clone
-2) Run composer update
-3) Run npm update
+## Installation
+1) Create directory. (ex: mkdir boilerplate && cd boilerpate)
+2) Git clone "git clone https://github.com/jjc704/boiler-plate-laravel-react-graphql.git . "
+2) Run "composer update"
+3) Run "npm update"
 
-# Installation Instructions from scratch
-1) Install Laravel
+## Installation from scratch (codeanywhere.com container)
+1) Create new laravel project
+2) Create laravel database for mysql
 2) Update .env file with database credential
-3) Run php artisan migrate command to add demo data and tables for this project demo
-4) Run php artisan preset react to set laravel to use react
+3) Run "php artisan migrate" command to add demo data and tables for this project demo
+4) Run "php artisan preset react" to set laravel to use react
 
 ## Post Installation Checks
 1) If successful the following routes are available to view
