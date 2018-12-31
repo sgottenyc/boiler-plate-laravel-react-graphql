@@ -622,7 +622,7 @@ function Avatar(props) {
   }
 
   return _react.default.createElement(Component, (0, _extends2.default)({
-    className: (0, _classnames.default)(classes.root, (0, _defineProperty2.default)({}, classes.colorDefault, !img), classNameProp)
+    className: (0, _classnames.default)(classes.root, classes.system, (0, _defineProperty2.default)({}, classes.colorDefault, !img), classNameProp)
   }, other), children);
 }
 
@@ -762,19 +762,19 @@ var _colorManipulator = __webpack_require__(/*! ../styles/colorManipulator */ ".
 
 var _ButtonBase = _interopRequireDefault(__webpack_require__(/*! ../ButtonBase */ "./node_modules/@material-ui/core/ButtonBase/index.js"));
 
-var _chainPropTypes = _interopRequireDefault(__webpack_require__(/*! ../utils/chainPropTypes */ "./node_modules/@material-ui/core/utils/chainPropTypes.js"));
-
 var _helpers = __webpack_require__(/*! ../utils/helpers */ "./node_modules/@material-ui/core/utils/helpers.js");
 
 // @inheritedComponent ButtonBase
 var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
-    root: (0, _extends2.default)({}, theme.typography.button, {
+    root: (0, _extends2.default)({
+      lineHeight: 1.3125
+    }, theme.typography.button, {
       boxSizing: 'border-box',
       minWidth: 64,
       minHeight: 36,
-      padding: '8px 16px',
+      padding: '6px 16px',
       borderRadius: theme.shape.borderRadius,
       color: theme.palette.text.primary,
       transition: theme.transitions.create(['background-color', 'box-shadow', 'border'], {
@@ -807,7 +807,7 @@ var styles = function styles(theme) {
 
     /* Styles applied to the root element if `variant="text"`. */
     text: {
-      padding: theme.spacing.unit
+      padding: '6px 8px'
     },
 
     /* Styles applied to the root element if `variant="text"` and `color="primary"`. */
@@ -989,17 +989,16 @@ var styles = function styles(theme) {
 
     /* Styles applied to the root element if `size="small"`. */
     sizeSmall: {
-      padding: '7px 8px',
+      padding: '4px 8px',
       minWidth: 64,
-      minHeight: 32,
+      minHeight: 31,
       fontSize: theme.typography.pxToRem(13)
     },
 
     /* Styles applied to the root element if `size="large"`. */
     sizeLarge: {
       padding: '8px 24px',
-      minWidth: 112,
-      minHeight: 40,
+      minHeight: 42,
       fontSize: theme.typography.pxToRem(15)
     },
 
@@ -1124,7 +1123,7 @@ function Button(props) {
    * `fab` and `extendedFab` are deprecated.
    * Instead use `<Fab>` and `<Fab variant="extended">`
    */
-  variant: (0, _chainPropTypes.default)(_propTypes.default.oneOf(['text', 'outlined', 'contained', 'fab', 'extendedFab', 'flat', 'raised']), function (props) {
+  variant: (0, _utils.chainPropTypes)(_propTypes.default.oneOf(['text', 'outlined', 'contained', 'fab', 'extendedFab', 'flat', 'raised']), function (props) {
     if (props.variant === 'flat') {
       return new Error('Material-UI: the `flat` variant will be removed in the next major release. ' + '`text` is equivalent and should be used instead.');
     }
@@ -1988,7 +1987,8 @@ var styles = function styles(theme) {
     rippleVisible: {
       opacity: 0.3,
       transform: 'scale(1)',
-      animation: "mui-ripple-enter ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut)
+      animation: "mui-ripple-enter ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut),
+      animationName: '$mui-ripple-enter'
     },
 
     /* Styles applied to the internal `Ripple` components `ripplePulsate` class. */
@@ -2009,7 +2009,8 @@ var styles = function styles(theme) {
     /* Styles applied to the internal `Ripple` components `childLeaving` class. */
     childLeaving: {
       opacity: 0,
-      animation: "mui-ripple-exit ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut)
+      animation: "mui-ripple-exit ".concat(DURATION, "ms ").concat(theme.transitions.easing.easeInOut),
+      animationName: '$mui-ripple-exit'
     },
 
     /* Styles applied to the internal `Ripple` components `childPulsate` class. */
@@ -2017,7 +2018,8 @@ var styles = function styles(theme) {
       position: 'absolute',
       left: 0,
       top: 0,
-      animation: "mui-ripple-pulsate 2500ms ".concat(theme.transitions.easing.easeInOut, " 200ms infinite")
+      animation: "mui-ripple-pulsate 2500ms ".concat(theme.transitions.easing.easeInOut, " 200ms infinite"),
+      animationName: '$mui-ripple-pulsate'
     },
     '@keyframes mui-ripple-enter': {
       '0%': {
@@ -2147,7 +2149,7 @@ function (_React$PureComponent) {
             rippleSize: rippleSize,
             cb: cb
           });
-        }; // Deplay the execution of the ripple effect.
+        }; // Delay the execution of the ripple effect.
 
 
         _this.startTimer = setTimeout(function () {
@@ -2906,7 +2908,7 @@ var styles = {
 };
 /**
  * Provides context such as filled/focused/error/required for form inputs.
- * Relying on the context provides high flexibilty and ensures that the state always stays
+ * Relying on the context provides high flexibility and ensures that the state always stays
  * consistent across the children of the `FormControl`.
  * This context is used by the following components:
  *  - FormLabel
@@ -4999,7 +5001,7 @@ var styles = {
     // Overflow also needed to here to remove the extra row
     // added to textareas in Firefox.
     overflow: 'hidden',
-    // Visibility needed to hide the extra text area on ipads
+    // Visibility needed to hide the extra text area on iPads
     visibility: 'hidden',
     position: 'absolute',
     height: 'auto',
@@ -5652,7 +5654,7 @@ function (_React$Component) {
         // Wondering why we use two RAFs? Check this video out:
         // https://www.youtube.com/watch?v=cCOL7MC4Pl0
         requestAnimationFrame(function () {
-          // The browser should be about to render the DOM that React commited at this point.
+          // The browser should be about to render the DOM that React committed at this point.
           // We don't want to interrupt. Let's wait the next raf.
           requestAnimationFrame(function () {
             if (_this2.mounted) {
@@ -6140,8 +6142,6 @@ var _withStyles = _interopRequireDefault(__webpack_require__(/*! ../styles/withS
 
 var _helpers = __webpack_require__(/*! ../utils/helpers */ "./node_modules/@material-ui/core/utils/helpers.js");
 
-var _chainPropTypes = _interopRequireDefault(__webpack_require__(/*! ../utils/chainPropTypes */ "./node_modules/@material-ui/core/utils/chainPropTypes.js"));
-
 var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -6430,7 +6430,7 @@ function Typography(props) {
    * Applies the theme typography styles.
    * Use `body1` as the default value with the legacy implementation and `body2` with the new one.
    */
-  variant: (0, _chainPropTypes.default)(_propTypes.default.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'button', 'overline', 'srOnly', 'inherit', // deprecated
+  variant: (0, _utils.chainPropTypes)(_propTypes.default.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'button', 'overline', 'srOnly', 'inherit', // deprecated
   'display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading']), function (props) {
     var deprecatedVariants = ['display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading'];
 
@@ -8376,7 +8376,7 @@ function createTypography(palette, typography) {
     subtitle2: buildVariant(fontWeightMedium, 14, 1.57, 0.1),
     body1Next: buildVariant(fontWeightRegular, 16, 1.5, 0.15),
     body2Next: buildVariant(fontWeightRegular, 14, 1.5, 0.15),
-    buttonNext: buildVariant(fontWeightMedium, 14, 1.5, 0.4, caseAllCaps),
+    buttonNext: buildVariant(fontWeightMedium, 14, 1.3125, 0.4, caseAllCaps),
     captionNext: buildVariant(fontWeightRegular, 12, 1.66, 0.4),
     overline: buildVariant(fontWeightRegular, 12, 2.66, 1, caseAllCaps)
   }; // To remove in v4
@@ -9145,7 +9145,7 @@ var generateClassName = (0, _createGenerateClassName.default)(); // Global index
 // We create the style sheet during at the creation of the component,
 // children are handled after the parents, so the order of style elements would be parent->child.
 // It is a problem though when a parent passes a className
-// which needs to override any childs styles.
+// which needs to override any child's styles.
 // StyleSheet of the child has a higher specificity, because of the source order.
 // So our solution is to render sheets them in the reverse order child->sheet, so
 // that parent has a higher specificity.
@@ -9649,35 +9649,6 @@ var zIndex = {
   tooltip: 1500
 };
 var _default = zIndex;
-exports.default = _default;
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/utils/chainPropTypes.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@material-ui/core/utils/chainPropTypes.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function chainPropTypes(propType1, propType2) {
-  /* istanbul ignore if */
-  if (false) {}
-
-  return function validate() {
-    return propType1.apply(void 0, arguments) || propType2.apply(void 0, arguments);
-  };
-}
-
-var _default = chainPropTypes;
 exports.default = _default;
 
 /***/ }),
@@ -10232,6 +10203,35 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/utils/chainPropTypes.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@material-ui/utils/chainPropTypes.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function chainPropTypes(propType1, propType2) {
+  /* istanbul ignore if */
+  if (false) {}
+
+  return function validate() {
+    return propType1.apply(void 0, arguments) || propType2.apply(void 0, arguments);
+  };
+}
+
+var _default = chainPropTypes;
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/utils/componentPropType.js":
 /*!**************************************************************!*\
   !*** ./node_modules/@material-ui/utils/componentPropType.js ***!
@@ -10251,7 +10251,8 @@ exports.default = void 0;
 
 var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js"));
 
-var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+var _reactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+
 /**
  * A factory that returns a propTypes validator that only accepts values that
  * are also accepted by React.createElement
@@ -10260,8 +10261,6 @@ var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index
  * @param {boolean} isRequired If `true` returns a validator
  *                             that will throw if nullish values are passed
  */
-
-
 function createComponentProp(isRequired) {
   /* istanbul ignore if */
   if (false) {}
@@ -10275,7 +10274,7 @@ function createComponentProp(isRequired) {
       if (isRequired) {
         message = "The ".concat(location, " `").concat(propName, "` is marked as required in `").concat(componentName, "`, ") + "but its value is `".concat((0, _typeof2.default)(prop), "`.");
       }
-    } else if (!ReactIs.isValidElementType(prop)) {
+    } else if (!(0, _reactIs.isValidElementType)(prop)) {
       var preciseType = (0, _typeof2.default)(prop);
       message = "Invalid ".concat(location, " `").concat(propName, "` of type `").concat(preciseType, "` ") + "supplied to `".concat(componentName, "`, expected a component.");
     }
@@ -10396,7 +10395,7 @@ exports.default = _default;
 /*!*****************************************************!*\
   !*** ./node_modules/@material-ui/utils/index.es.js ***!
   \*****************************************************/
-/*! exports provided: componentPropType, exactProp, getDisplayName, ponyfillGlobal */
+/*! exports provided: componentPropType, chainPropTypes, exactProp, getDisplayName, ponyfillGlobal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10404,20 +10403,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componentPropType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./componentPropType */ "./node_modules/@material-ui/utils/componentPropType.js");
 /* harmony import */ var _componentPropType__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_componentPropType__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "componentPropType", function() { return _componentPropType__WEBPACK_IMPORTED_MODULE_0___default.a; });
-/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./exactProp */ "./node_modules/@material-ui/utils/exactProp.js");
-/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_exactProp__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "exactProp", function() { return _exactProp__WEBPACK_IMPORTED_MODULE_1___default.a; });
-/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getDisplayName */ "./node_modules/@material-ui/utils/getDisplayName.js");
-/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_getDisplayName__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "getDisplayName", function() { return _getDisplayName__WEBPACK_IMPORTED_MODULE_2___default.a; });
-/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ponyfillGlobal */ "./node_modules/@material-ui/utils/ponyfillGlobal.js");
-/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "ponyfillGlobal", function() { return _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_3___default.a; });
-/** @license Material-UI v3.0.0-alpha.1
+/* harmony import */ var _chainPropTypes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chainPropTypes */ "./node_modules/@material-ui/utils/chainPropTypes.js");
+/* harmony import */ var _chainPropTypes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_chainPropTypes__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "chainPropTypes", function() { return _chainPropTypes__WEBPACK_IMPORTED_MODULE_1___default.a; });
+/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./exactProp */ "./node_modules/@material-ui/utils/exactProp.js");
+/* harmony import */ var _exactProp__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_exactProp__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "exactProp", function() { return _exactProp__WEBPACK_IMPORTED_MODULE_2___default.a; });
+/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./getDisplayName */ "./node_modules/@material-ui/utils/getDisplayName.js");
+/* harmony import */ var _getDisplayName__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_getDisplayName__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "getDisplayName", function() { return _getDisplayName__WEBPACK_IMPORTED_MODULE_3___default.a; });
+/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ponyfillGlobal */ "./node_modules/@material-ui/utils/ponyfillGlobal.js");
+/* harmony import */ var _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "ponyfillGlobal", function() { return _ponyfillGlobal__WEBPACK_IMPORTED_MODULE_4___default.a; });
+/** @license Material-UI v3.0.0-alpha.2
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 
 
 
@@ -81709,8 +81712,8 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\VMShare\laravelgraphql\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\VMShare\laravelgraphql\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
