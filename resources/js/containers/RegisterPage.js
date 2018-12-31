@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Registration from './../components/Registration'
 
-class RegisterPage extends Component {
+export default class RegisterPage extends Component {
   render () {
     return (
         <div>
@@ -11,7 +11,3 @@ class RegisterPage extends Component {
     )
   }
 }
-
-export default RegisterPage;
-
-ReactDOM.render(<RegisterPage />, document.getElementById('app'));

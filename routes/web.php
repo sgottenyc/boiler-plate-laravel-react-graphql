@@ -12,7 +12,7 @@
 */
 
 /* Wild card so all routes goes to app view template */
-Route::view('/', 'login');
+Route::view('/', 'app');
 
 Route::view('/login', 'login');
 
@@ -22,5 +22,5 @@ Route::view('/checkout', 'checkout');
 
 Route::view('/dashboard', 'dashboard');
 
-Route::view('/register', 'register');
+Route::view('/register', 'app');
 
