@@ -1,7 +1,7 @@
 # Boiler Plate Laravel Project 
 
-The objective for this project is to jump start building SPA application using React, Redux, GraphQL and Laravel.
-This project will demostrate how to integrate these technologies together.
+The objective for this project is to jump start building SPA application using React, Redux, GraphQL, Laravel and MaterialUI.
+This project will demostrate how to integrate these technologies together to build a capable SPA application.
 
 ##PHP Composer Packages
 * GraphQL
