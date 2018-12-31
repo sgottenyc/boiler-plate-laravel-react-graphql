@@ -86,12 +86,12 @@ function SignIn(props) {
             fullWidth
             variant="contained"
             color="secondary"
+            href="/register"
             className={classes.submit}
           >
             Register
           </Button>
         </form>
-        <Link to="/register">Register</Link>
       </Paper>
     </main>
   );
