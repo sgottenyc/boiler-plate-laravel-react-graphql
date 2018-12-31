@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Registration from './../components/Registration'
 
 class RegisterPage extends Component {
@@ -13,4 +12,6 @@ class RegisterPage extends Component {
   }
 }
 
-ReactDOM.render(<RegisterPage />, document.getElementById('app'))
+export default RegisterPage;
+
+ReactDOM.render(<RegisterPage />, document.getElementById('app'));
