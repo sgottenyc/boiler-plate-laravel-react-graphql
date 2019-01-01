@@ -90555,7 +90555,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\VMShare\laravelgraphql\resources\js\checkout.js */"./resources/js/checkout.js");
+module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/checkout.js */"./resources/js/checkout.js");
 
 
 /***/ })

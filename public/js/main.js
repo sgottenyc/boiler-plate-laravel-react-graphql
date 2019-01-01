@@ -120608,7 +120608,7 @@ __webpack_require__(/*! ./containers/Home */ "./resources/js/containers/Home.js"
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\VMShare\laravelgraphql\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/main.js */"./resources/js/main.js");
 
 
 /***/ })

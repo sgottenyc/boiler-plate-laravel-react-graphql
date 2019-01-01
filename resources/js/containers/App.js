@@ -1,27 +1,31 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import ApolloClient from "apollo-boost";
 import LoginPage from '../containers/LoginPage';
-import { ApolloProvider } from "react-apollo";
 import AppRouter from '../routes/appRouter';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import appReducer from '../reducers/appReducer';
+import { ApolloProvider } from 'react-apollo';
+
+import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-    uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
-  }); 
+  clientState: {
+    defaults: {
+      isConnected: true
+    },
+    resolvers: {
+      Mutation: {
+        updateNetworkStatus: (_, { isConnected }, { cache }) => {
+          cache.writeData({ data: { isConnected }});
+          return null;
+        }
+      }
+    }
+  }
+});
 
-const store = createStore(
-    combineReducers({
-      app: appReducer
-    }),
-    {}, // initial state
-);
-  
 class App extends Component {
   render () {
     return (
-      <ApolloProvider client={client} store={store}>
+      <ApolloProvider client={client}>
         <AppRouter/>
       </ApolloProvider>
     )

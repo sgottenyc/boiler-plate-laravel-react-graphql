@@ -1,5 +1,6 @@
 export default {
-  app: {
-    
+  myData: {
+    name: 'test',
+    email: 'test@test.com'
   }
 };

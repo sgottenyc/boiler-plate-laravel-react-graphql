@@ -120608,7 +120608,7 @@ __webpack_require__(/*! ./containers/Dashboard */ "./resources/js/containers/Das
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\VMShare\laravelgraphql\resources\js\dashboard.js */"./resources/js/dashboard.js");
+module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/dashboard.js */"./resources/js/dashboard.js");
 
 
 /***/ })

@@ -86924,7 +86924,7 @@ __webpack_require__(/*! ./containers/RegisterPage */ "./resources/js/containers/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\VMShare\laravelgraphql\resources\js\register.js */"./resources/js/register.js");
+module.exports = __webpack_require__(/*! /home/cabox/workspace/boilerplate/resources/js/register.js */"./resources/js/register.js");
 
 
 /***/ })
