@@ -24,3 +24,5 @@ Route::view('/dashboard', 'dashboard');
 
 Route::view('/register', 'app');
 
+Route::view('/product', 'product');
+

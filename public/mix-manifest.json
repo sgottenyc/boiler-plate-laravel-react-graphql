@@ -4,5 +4,6 @@
     "/js/checkout.js": "/js/checkout.js",
     "/js/dashboard.js": "/js/dashboard.js",
     "/js/main.js": "/js/main.js",
+    "/js/product.js": "/js/product.js",
     "/js/register.js": "/js/register.js"
 }
