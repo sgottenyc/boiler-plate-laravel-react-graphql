@@ -8,8 +8,8 @@ This project will demostrate how to integrate these technologies together to bui
 
 ## NPM Packages
 * React
-* Redux
-* Redux Form
+* Apollo Client
+* Formik
 * Material UI React
 * Webpack
 
