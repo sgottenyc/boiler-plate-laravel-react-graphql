@@ -21,7 +21,7 @@ class ProductsQuery extends Query
     public function args()
     {
         return [
-            'id' => ['name' => 'id', 'type' => Type::string()],
+            'id' => ['name' => 'id', 'type' => Type::int()],
             'name' => ['name' => 'name', 'type' => Type::string()],
             'sku' => ['name' => 'sku', 'type' => Type::string()],          
             'inventory' => ['name' => 'inventory', 'type' => Type::int()],          

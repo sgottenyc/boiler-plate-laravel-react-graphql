@@ -32,9 +32,9 @@ class UpdateProductMutation extends Mutation
     public function resolve($root, $args)
     {
         $product = Product::find($args['id']);
-        $product->name = $args['name'];
+        $product->name = isset($args['name']) ? $args['name'] : $product->name;
         $product->sku = isset($args['sku']) ? $args['sku'] : $product->sku;
-        $product->inventory = $args['inventory'];
+        $product->inventory =isset($args['inventory']) ? $args['inventory'] : $product->inventory;
         $product->save();
         return $product;
     }
