@@ -47,3 +47,6 @@ This project will demostrate how to integrate these technologies together to bui
 * /home
 * /register
 * /login
+
+## Guide to Unit Test with PHPunit
+

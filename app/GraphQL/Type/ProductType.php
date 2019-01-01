@@ -3,7 +3,7 @@
 namespace App\GraphQL\Type;
 
 use GraphQL\Type\Definition\Type;
-use Folklore\GraphQL\Support\Type as GraphQLType;
+use Rebing\GraphQL\Support\Type as GraphQLType;
 
 class ProductType extends GraphQLType
 {
@@ -27,7 +27,15 @@ class ProductType extends GraphQLType
             'name' => [
                 'type' => Type::string(),
                 'description' => 'The name of the product'
-            ]
+            ],
+            'sku' => [
+                'type' => Type::string(),
+                'description' => 'The sku of the product'
+            ],          
+            'inventory' => [
+                'type' => Type::int(),
+                'description' => 'The inventory for the product'
+            ],          
         ];
     }
 }
