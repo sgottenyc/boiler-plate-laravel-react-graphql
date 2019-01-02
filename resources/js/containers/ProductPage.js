@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import LoginPage from '../containers/LoginPage';
-import AppRouter from '../routes/appRouter';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import { defaults, resolvers } from "../resolvers/productResolver";
