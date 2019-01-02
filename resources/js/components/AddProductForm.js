@@ -40,6 +40,10 @@ class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  save = () => {
+    
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -62,18 +66,23 @@ class FormDialog extends React.Component {
               fullWidth
             />
             <TextField
-              autoFocus
               margin="dense"
               id="sku"
               label="SKU"
               fullWidth
-            />      
+            /> 
+            <TextField
+              margin="dense"
+              id="inventory"
+              label="Inventory"
+              fullWidth
+            /> 
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary" variant="contained">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="secondary" variant="contained">
+            <Button onClick={this.save} color="secondary" variant="contained">
               Save
             </Button>
           </DialogActions>

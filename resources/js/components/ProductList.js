@@ -50,9 +50,9 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'NAME' },
   { id: 'sku', numeric: true, disablePadding: false, label: 'SKU' },
-  { id: 'inventory', numeric: true, disablePadding: false, label: 'Inventory' },
+  { id: 'inventory', numeric: true, disablePadding: false, label: 'INVENTORY' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -203,10 +203,7 @@ class EnhancedTable extends React.Component {
     order: 'asc',
     orderBy: 'name',
     selected: [],
-    data: [
-      createData('Cupcake', 'Adss', 3),
-      createData('Donut', 'asdfsd', 25),
-    ],
+    data: [],
     page: 0,
     rowsPerPage: 5,
   };
@@ -265,7 +262,6 @@ class EnhancedTable extends React.Component {
     const { classes, data } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar numSelected={selected.length} />

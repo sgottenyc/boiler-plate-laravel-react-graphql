@@ -42,7 +42,14 @@ const client = new ApolloClient({
   clientState: {
     defaults: {
       isConnected: true,
-       products: [ { id: 1, name: 'yahoo', sku: '1a', inventory: 10, __typename: 'Product'}]
+       products: [ 
+                    { id: 1, name: 'yahoo1', sku: '1a', inventory: 10, __typename: 'Product'},
+                    { id: 2, name: 'yahoo2', sku: '1b', inventory: 11, __typename: 'Product'},
+                    { id: 3, name: 'yahoo3', sku: '1c', inventory: 12, __typename: 'Product'},
+                    { id: 4, name: 'yahoo4', sku: '1d', inventory: 13, __typename: 'Product'},
+                    { id: 5, name: 'yahoo5', sku: '1e', inventory: 14, __typename: 'Product'},                 
+                    { id: 6, name: 'yahoo6', sku: '1f', inventory: 15, __typename: 'Product'},                          
+                 ]
     },
     resolvers: {
       Mutation: {
