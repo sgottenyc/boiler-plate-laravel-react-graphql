@@ -7,6 +7,19 @@ import ApolloClient from 'apollo-boost';
 import { defaults, resolvers } from "../resolvers/productResolver";
 import ProductList from "../components/ProductList";
 import AddProductForm from "../components/AddProductForm";
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+
+const GET_PRODUCTS = gql`
+  query GetProducts {
+    products @client {
+      id
+      name
+      sku
+    }
+  }
+`;
+
 
 const productTypeDefs = `
   type Product {
@@ -23,6 +36,26 @@ const productTypeDefs = `
   }
 `;
 
+
+const client = new ApolloClient({
+  clientState: {
+    defaults: {
+      isConnected: true,
+       products: [ { id: 1, name: 'yahoo', sku: '1a', inventory: 10}]
+    },
+    resolvers: {
+      Mutation: {
+        updateNetworkStatus: (_, { isConnected }, { cache }) => {
+          cache.writeData({ data: { isConnected }});
+          return null;
+        }
+      }
+    },
+    typeDefs: productTypeDefs
+  }
+});
+
+/*
 const client = new ApolloClient({
   uri: `/graphql`,
   clientState: {
@@ -31,13 +64,16 @@ const client = new ApolloClient({
     productTypeDefs
   }
 });
+*/
 
 class App extends Component {
   render () {
     return (
       <ApolloProvider client={client}>
         <AddProductForm />
-        <ProductList />
+        <Query query={GET_PRODUCTS}>
+            {({ data }) => (<ProductList data={data} />) }
+         </Query>
       </ApolloProvider>
     )
   }
