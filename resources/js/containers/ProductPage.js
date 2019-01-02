@@ -6,6 +6,7 @@ import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import { defaults, resolvers } from "../resolvers/productResolver";
 import ProductList from "../components/ProductList";
+import AddProductForm from "../components/AddProductForm";
 
 const productTypeDefs = `
   type Product {
@@ -31,12 +32,11 @@ const client = new ApolloClient({
   }
 });
 
-
-
 class App extends Component {
   render () {
     return (
       <ApolloProvider client={client}>
+        <AddProductForm />
         <ProductList />
       </ApolloProvider>
     )

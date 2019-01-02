@@ -120452,7 +120452,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var styles = {
   root: {
-    width: '100%',
+    width: 800,
     overflowX: 'auto'
   },
   table: {

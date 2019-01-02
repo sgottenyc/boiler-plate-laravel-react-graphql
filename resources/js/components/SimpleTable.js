@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = {
   root: {
-    width: '100%',
+    width: 800,
     overflowX: 'auto',
   },
   table: {
