@@ -71,7 +71,7 @@ const client = new ApolloClient({
             };
             // you can also do cache.writeData({ data }) here if you prefer
             cache.writeQuery({ query, data });
-            return newTodo;
+            return newProduct;
         }
       }
     },
