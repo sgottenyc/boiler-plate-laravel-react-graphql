@@ -41,7 +41,7 @@ const client = new ApolloClient({
   clientState: {
     defaults: {
       isConnected: true,
-       products: [ { id: 1, name: 'yahoo', sku: '1a', inventory: 10}]
+       products: [ { id: 1, name: 'yahoo', sku: '1a', inventory: 10, __typename: 'Product'}]
     },
     resolvers: {
       Mutation: {
@@ -72,7 +72,7 @@ class App extends Component {
       <ApolloProvider client={client}>
         <AddProductForm />
         <Query query={GET_PRODUCTS}>
-            {({ data }) => (<ProductList data={data} />) }
+            {({ data }) => (<ProductList data={data.products} />) }
          </Query>
       </ApolloProvider>
     )
