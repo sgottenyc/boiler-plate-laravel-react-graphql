@@ -262,8 +262,8 @@ class EnhancedTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { classes, data } = this.props;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
@@ -335,6 +335,10 @@ class EnhancedTable extends React.Component {
 
 EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
+};
+
+EnhancedTable.defaultProps = {
+  data: []
 };
 
 export default withStyles(styles)(EnhancedTable);
