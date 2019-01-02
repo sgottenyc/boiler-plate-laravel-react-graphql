@@ -4,7 +4,7 @@ The objective for this project is to jump start building SPA application using R
 This project will demostrate how to integrate these technologies together to build a capable SPA application.
 
 ##PHP Composer Packages
-* GraphQL
+* GraphQL - Reference: https://github.com/rebing/graphql-laravel
 
 ## NPM Packages
 * React
@@ -33,6 +33,12 @@ This project will demostrate how to integrate these technologies together to bui
 9) Run "php artsian cache:clear" to clear cache
 10) Run "php artisan config:clear" to clear configuration
 11) Run "php artisan migrate" to migrate local database
+12) Run "npm run dev" to compile js and css assets to public directory
+13) Start webserver and make sure point to web root to /public
+
+## Unit Testing
+* Set path environment variable to point to php unit (windows: set PATH=%PATH%;C:\path-to-project\vendor\bin )
+* Run "phpunit" 
 
 ## Installation from scratch (codeanywhere.com container)
 1) Create new laravel project

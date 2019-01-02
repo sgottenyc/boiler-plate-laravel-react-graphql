@@ -4,9 +4,20 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import Input from '@material-ui/core/Input';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { Mutation } from 'react-apollo';
+import { Formik } from 'formik';
+import gql from 'graphql-tag';
+
+
+const ADD_PRODUCT = gql`
+  mutation addProduct($name: name!, $sku: sku, $inventory: inventory) {
+    addProduct(name: $name, sku: $sku, inventory: $inventory) @client
+  }
+`;
 
 const styles = theme => ({  
   main: {
@@ -40,56 +51,88 @@ class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
-  save = () => {
-    
-  };
-
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.main}>
-        <Button color="primary" className={classes.add} variant="contained" onClick={this.handleClickOpen}>
-          Add Product
-        </Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Add Product</DialogTitle>
-          <DialogContent>            
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Name"
-              fullWidth
-            />
-            <TextField
-              margin="dense"
-              id="sku"
-              label="SKU"
-              fullWidth
-            /> 
-            <TextField
-              margin="dense"
-              id="inventory"
-              label="Inventory"
-              fullWidth
-            /> 
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary" variant="contained">
-              Cancel
+      <Mutation mutation={ADD_PRODUCT}>
+       {(addProduct, { data }) => {         
+         return (
+          <form onSubmit={ e => {
+            e.preventDefault();
+            addProduct({ variables: { sku: input.value } });
+            debugger;
+          }}
+          >
+          <div className={classes.main}>
+            <Button color="primary" className={classes.add} variant="contained" onClick={this.handleClickOpen}>
+              Add Product
             </Button>
-            <Button onClick={this.save} color="secondary" variant="contained">
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+            <Dialog
+              open={this.state.open}
+              onClose={this.handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">Add Product</DialogTitle>
+              <DialogContent>            
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Name"
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="sku"
+                  label="SKU"
+                  fullWidth
+                /> 
+                <TextField
+                  margin="dense"
+                  id="inventory"
+                  label="Inventory"
+                  fullWidth
+                /> 
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleClose} color="primary" variant="contained">
+                  Cancel
+                </Button>
+                <Button color="secondary" variant="contained">
+                    <Input type="submit">
+                            Save
+                    </Input>
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+          </form>
+          )
+         }
+      }
+     </Mutation>
     );
   }
 }
+
+/* WRAPPED COMPONENT EXAMPLE 
+const WrappedComponent = graphql(GET_ARTICLES, {
+  props: ({ data: { loading, error, networkStatus, articles } }) => {
+    if (loading) {
+      return { loading };
+    }
+
+    if (error) {
+      return { error };
+    }
+
+    return {
+      loading: false,
+      networkStatus,
+      articles,
+    };
+  },
+})(Articles);
+*/
 
 export default withStyles(styles)(FormDialog);
