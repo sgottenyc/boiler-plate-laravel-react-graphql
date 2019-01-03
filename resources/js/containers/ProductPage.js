@@ -68,9 +68,8 @@ const client = new ApolloClient({
             const newProduct = { id: nextProductId++, name, sku, inventory, __typename: 'Product' };
             const data = {
               products: previous.products.concat([newProduct]),
-            };
-            // you can also do cache.writeData({ data }) here if you prefer
-            cache.writeQuery({ query, data });
+            };            
+            cache.writeData({ data });
             return newProduct;
         }
       }
