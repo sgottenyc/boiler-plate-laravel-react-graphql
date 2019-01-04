@@ -35,23 +35,17 @@ const productTypeDefs = `
   }
 `;
 
-let nextProductId = 15;
+let nextProductId = 7;
 
 const client = new ApolloClient({
   clientState: {
     defaults: {
       isConnected: true,
-       products: [ 
-                    { id: 1, name: 'yahoo1', sku: '1a', inventory: 10, __typename: 'Product'},
-                    { id: 2, name: 'yahoo2', sku: '1b', inventory: 11, __typename: 'Product'},
-                    { id: 3, name: 'yahoo3', sku: '1c', inventory: 12, __typename: 'Product'},
-                    { id: 4, name: 'yahoo4', sku: '1d', inventory: 13, __typename: 'Product'},
-                    { id: 5, name: 'yahoo5', sku: '1e', inventory: 14, __typename: 'Product'},                 
-                    { id: 6, name: 'yahoo6', sku: '1f', inventory: 15, __typename: 'Product'},                          
-                 ]
+       products: []
     },
     resolvers: {
       Mutation: {
+        // send the object to cache
         addProduct: (_, { name, sku, inventory }, { cache }) => {
           const query = gql`
                               query GetProducts {
@@ -63,13 +57,17 @@ const client = new ApolloClient({
                                 }
                               }
                             `;
-
+            //Get the data and save it to previous
+            debugger;
             const previous = cache.readQuery({ query });
             const newProduct = { id: nextProductId++, name, sku, inventory, __typename: 'Product' };
             const data = {
               products: previous.products.concat([newProduct]),
             };            
-            cache.writeData({ data });
+            cache.writeQuery({ 
+              query:query,
+              data: data
+            });
             return newProduct;
         }
       }
