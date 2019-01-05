@@ -65,7 +65,7 @@ const client = new ApolloClient({
                               }
                             `;
             //Get the data and save it to previous
-            debugger;
+            //debugger;
             const previous = cache.readQuery({ query });
             const newProduct = { id: nextProductId++, name, sku, inventory, __typename: 'Product' };
             const data = {
