@@ -120,7 +120,7 @@ class FormDialog extends React.Component {
             <DialogTitle id="form-dialog-title">Add Product</DialogTitle> 
             <DialogContent>    
              <Form>              
-              Name: <Field type="name" name="name" /> <br />
+              <Field type="name" name="name" label="Name" /> <br />
               <ErrorMessage name="name" component="div" />
               SKU: <Field type="sku" name="sku" /> <br />
               <ErrorMessage name="sku" component="div" />

@@ -29,6 +29,8 @@ const productTypeDefs = `
   }
   type Mutation {
     addProduct(name: String!, sku: String, inventory: Int): Product
+    updateProduct(id: Int!, name: String!, sku: String, inventory: Int): Product
+    deleteProducts(id: [Int!]!) : Product
   }
   type Query {
     products: [Product]
@@ -36,6 +38,17 @@ const productTypeDefs = `
 `;
 
 let nextProductId = 7;
+
+/* TEST
+mutation update {
+  updateProduct(id:1, name:"223", sku:"1232",inventory: 12) @client {
+    id
+    name
+    sku
+    inventory
+  }
+}
+*/
 
 const client = new ApolloClient({
   clientState: {
@@ -52,6 +65,69 @@ const client = new ApolloClient({
     },
     resolvers: {
       Mutation: {
+         deleteProducts: (_, { id }, { cache }) => {
+          const query = gql`
+                              query GetProducts {
+                                products @client {
+                                  id
+                                  name
+                                  sku
+                                  inventory
+                                }
+                              }
+                            `;
+            //Get the data and save it to previous
+            debugger;
+            const previous = cache.readQuery({ query });
+           /* TEST WITH 
+           mutation delete {
+                deleteProducts(id: [1,2,3]) @client {
+                  id
+                  name
+                } 
+              }
+          */
+
+           for (let y=0; y < id.length; y++) 
+           {
+              let currentProductIndex = previous.products.findIndex(x => x.id === y[id]);
+              previous.products.splice(currentProductIndex, 1);
+           }            
+            const data = {
+              products: previous.products
+            };            
+            cache.writeQuery({ 
+              query:query,
+              data: data
+            });
+            return previous.products;
+        },
+        updateProduct: (_, { id, name, sku, inventory }, { cache }) => {
+          const query = gql`
+                              query GetProducts {
+                                products @client {
+                                  id
+                                  name
+                                  sku
+                                  inventory
+                                }
+                              }
+                            `;
+            //Get the data and save it to previous
+            debugger;
+            const previous = cache.readQuery({ query });
+            const currentProduct = { id, name, sku, inventory, __typename: "Product" };
+            const currentProductIndex = previous.products.findIndex(x => x.id === id); 
+            previous.products[currentProductIndex] = currentProduct;
+            const data = {
+              products: previous.products
+            };            
+            cache.writeQuery({ 
+              query:query,
+              data: data
+            });
+            return currentProduct;
+        },
         // send the object to cache
         addProduct: (_, { name, sku, inventory }, { cache }) => {
           const query = gql`

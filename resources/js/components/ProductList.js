@@ -62,7 +62,6 @@ class EnhancedTableHead extends React.Component {
 
   render() {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
-
     return (
       <TableHead>
         <TableRow>
@@ -160,7 +159,8 @@ let EnhancedTableToolbar = props => {
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
-        {numSelected > 0 ? (
+        {
+          numSelected > 0 ? (
           <Tooltip title="Delete">
             <IconButton aria-label="Delete">
               <DeleteIcon />
@@ -276,7 +276,8 @@ class EnhancedTable extends React.Component {
               rowCount={data.length}
             />
             <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
+              {
+                 stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   const isSelected = this.isSelected(n.id);
