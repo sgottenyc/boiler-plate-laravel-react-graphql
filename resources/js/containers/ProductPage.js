@@ -4,7 +4,6 @@ import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import { defaults, resolvers } from "../resolvers/productResolver";
 import ProductList from "../components/ProductList";
-import AddProductForm from "../components/AddProductForm";
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -77,7 +76,7 @@ const client = new ApolloClient({
                               }
                             `;
             //Get the data and save it to previous
-            debugger;
+            //debugger;
             const previous = cache.readQuery({ query });
            /* TEST WITH 
            mutation delete {
@@ -90,8 +89,10 @@ const client = new ApolloClient({
 
            for (let y=0; y < id.length; y++) 
            {
-              let currentProductIndex = previous.products.findIndex(x => x.id === y[id]);
-              previous.products.splice(currentProductIndex, 1);
+              let currentProductIndex = previous.products.findIndex(x => x.id === id[y]);
+              if(currentProductIndex >= 0) {
+                previous.products.splice(currentProductIndex, 1);
+              }
            }            
             const data = {
               products: previous.products
@@ -103,7 +104,7 @@ const client = new ApolloClient({
             return previous.products;
         },
         updateProduct: (_, { id, name, sku, inventory }, { cache }) => {
-          const query = gql`
+            const query = gql`
                               query GetProducts {
                                 products @client {
                                   id
@@ -114,7 +115,7 @@ const client = new ApolloClient({
                               }
                             `;
             //Get the data and save it to previous
-            debugger;
+            //debugger;
             const previous = cache.readQuery({ query });
             const currentProduct = { id, name, sku, inventory, __typename: "Product" };
             const currentProductIndex = previous.products.findIndex(x => x.id === id); 
@@ -130,7 +131,7 @@ const client = new ApolloClient({
         },
         // send the object to cache
         addProduct: (_, { name, sku, inventory }, { cache }) => {
-          const query = gql`
+            const query = gql`
                               query GetProducts {
                                 products @client {
                                   id

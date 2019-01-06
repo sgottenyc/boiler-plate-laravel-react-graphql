@@ -19,6 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AddProductForm from "../components/AddProductForm";
+import EnhancedDeleteButton from "../components/EnhancedDeleteButton";
 
 let counter = 0;
 function createData(name, sku, inventory) {
@@ -139,7 +140,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes, onDeleteClick, onAddClick } = props;
+  const { numSelected, classes, onDeleteClick, onAddClick, itemSelected } = props;
 
   return (
     <Toolbar
@@ -162,11 +163,7 @@ let EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {
           numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete" onClick={onDeleteClick}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+          <EnhancedDeleteButton selected={itemSelected} />
         ) : (
           <Tooltip title="Add Product">
             <IconButton aria-label="Add Product" onClick={onAddClick}>
@@ -279,7 +276,8 @@ class EnhancedTable extends React.Component {
         <AddProductForm open={toggleAddForm} 
                         handleClose={this.handleClose} />
         <EnhancedTableToolbar numSelected={selected.length} 
-                              onAddClick={this.addClick}                               
+                              onAddClick={this.addClick}   
+                              itemSelected={this.state.selected}
                               onDeleteClick={this.deleteClick} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
