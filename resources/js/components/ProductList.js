@@ -18,6 +18,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import AddProductDialog from "../components/AddProductDialog";
+import EnhancedDeleteButton from "../components/EnhancedDeleteButton";
 
 let counter = 0;
 function createData(name, sku, inventory) {
@@ -62,7 +64,6 @@ class EnhancedTableHead extends React.Component {
 
   render() {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
-
     return (
       <TableHead>
         <TableRow>
@@ -139,8 +140,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-
+  const { numSelected, classes, onDeleteClick, onAddClick, onSuccessDeletion, itemSelected } = props;
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -160,15 +160,12 @@ let EnhancedTableToolbar = props => {
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+        {
+          numSelected > 0 ? (
+          <EnhancedDeleteButton selected={itemSelected} onSuccessDeletion={onSuccessDeletion} />
         ) : (
           <Tooltip title="Add Product">
-            <IconButton aria-label="Add Product">
+            <IconButton aria-label="Add Product" onClick={onAddClick}>
               <AddIcon />
             </IconButton>
           </Tooltip>
@@ -205,17 +202,20 @@ class EnhancedTable extends React.Component {
     selected: [],
     data: [],
     page: 0,
+    toggleAddForm: false,
     rowsPerPage: 5,
+  };
+
+  onSuccessDeletion = event => {
+    this.setState( { selected: [] } );
   };
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
-
     if (this.state.orderBy === property && this.state.order === 'desc') {
       order = 'asc';
     }
-
     this.setState({ order, orderBy });
   };
 
@@ -256,15 +256,33 @@ class EnhancedTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  deleteClick = event => {
+    alert(this.state.selected);
+  }
+  
+  addClick = event => {
+    this.setState( { toggleAddForm: true });
+  }
+  
+  handleClose = event => {
+    this.setState( { toggleAddForm: false });
+  }
+  
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
     const { classes, data } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { order, orderBy, selected, rowsPerPage, page, toggleAddForm } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <AddProductDialog open={toggleAddForm} 
+                          handleClose={this.handleClose} />
+        <EnhancedTableToolbar numSelected={selected.length} 
+                              onAddClick={this.addClick}   
+                              itemSelected={this.state.selected}
+                              onSuccessDeletion={this.onSuccessDeletion}
+                              onDeleteClick={this.deleteClick} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -276,7 +294,8 @@ class EnhancedTable extends React.Component {
               rowCount={data.length}
             />
             <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
+              {
+                 stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   const isSelected = this.isSelected(n.id);

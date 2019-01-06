@@ -10,7 +10,7 @@ use Rebing\GraphQL\Support\Mutation;
 class CreateProductMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'CreateProductMutation',
+        'name' => 'CreateProduct',
         
     ];
 

@@ -36,10 +36,6 @@ This project will demostrate how to integrate these technologies together to bui
 12) Run "npm run dev" to compile js and css assets to public directory
 13) Start webserver and make sure point to web root to /public
 
-## Unit Testing
-* Set path environment variable to point to php unit (windows: set PATH=%PATH%;C:\path-to-project\vendor\bin )
-* Run "phpunit" 
-
 ## Installation from scratch (codeanywhere.com container)
 1) Create new laravel project
 2) Create laravel database for mysql
@@ -53,6 +49,9 @@ This project will demostrate how to integrate these technologies together to bui
 * /home
 * /register
 * /login
+* /product
+* /?graphiql
 
 ## Guide to Unit Test with PHPunit
-
+* Set path environment variable to point to php unit (windows: set PATH=%PATH%;C:\path-to-project\vendor\bin )
+* Run "phpunit" 

@@ -9,14 +9,20 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Mutation } from 'react-apollo';
-import { Formik } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import gql from 'graphql-tag';
+import { withFormik } from 'formik';
 
 
 const ADD_PRODUCT = gql`
   mutation addProduct($name: name!, $sku: sku, $inventory: inventory) {
-    addProduct(name: $name, sku: $sku, inventory: $inventory) @client
-  }
+    addProduct(name: $name, sku: $sku, inventory: $inventory) @client {
+      id
+      name
+      sku
+      inventory
+    }
+   }
 `;
 
 const styles = theme => ({  
@@ -38,76 +44,79 @@ const styles = theme => ({
 });
 
 
-class FormDialog extends React.Component {
-  state = {
-    open: false,
+class AddProductForm extends React.Component {
+  constructor(props) {
+    super(props);    
+    this.state = {
+      name: '',
+      sku: '',
+      inventory: ''
+    };
+  };
+  
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
   };
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  clearForm = () => {
+    this.state = { name: '', sku: '', inventory: ''};
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  onClickHandler = (e) => {
+    let form = this;
+    debugger;
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, open, handleClose, handleSubmit, submitForm, isSubmitting } = this.props;
     return (
-      <Mutation mutation={ADD_PRODUCT}>
-       {(addProduct, { data }) => {         
-         return (
-          <form onSubmit={ e => {
-            e.preventDefault();
-            addProduct({ variables: { sku: input.value } });
-            debugger;
-          }}
-          >
-          <div className={classes.main}>
-            <Button color="primary" className={classes.add} variant="contained" onClick={this.handleClickOpen}>
-              Add Product
-            </Button>
-            <Dialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              aria-labelledby="form-dialog-title"
-            >
-              <DialogTitle id="form-dialog-title">Add Product</DialogTitle>
-              <DialogContent>            
-                <TextField
+      <Mutation mutation={ADD_PRODUCT} {...this.props}>
+       {(addProduct, { data }) => {
+         return (          
+              <form ref="myForm" onSubmit={ (values, actions) => {
+                    event.preventDefault();
+                    addProduct( { variables: { name: this.state.name, 
+                                               sku: this.state.sku, 
+                                               inventory: this.state.inventory,
+                                               __typename: 'Product'} } );
+                    this.props.handleClose();
+                    return false;
+               }}>      
+               <TextField
                   autoFocus
                   margin="dense"
                   id="name"
+                  onChange={this.handleChange('name')}
+                  ref={input => { this.nameInput = input;  }}
                   label="Name"
                   fullWidth
                 />
                 <TextField
                   margin="dense"
                   id="sku"
+                  onChange={this.handleChange('sku')}
                   label="SKU"
                   fullWidth
                 /> 
                 <TextField
                   margin="dense"
                   id="inventory"
+                  onChange={this.handleChange('inventory')}
                   label="Inventory"
                   fullWidth
                 /> 
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.handleClose} color="primary" variant="contained">
+              <DialogActions>                
+                <Button onClick={handleClose} color="primary" variant="contained">
                   Cancel
-                </Button>
-                <Button color="secondary" variant="contained">
-                    <Input type="submit">
-                            Save
-                    </Input>
-                </Button>
+               </Button>
+               <Button type="submit" color="secondary" variant="contained">
+                  Submit
+               </Button>             
               </DialogActions>
-            </Dialog>
-          </div>
-          </form>
-          )
+           </form>           
+          )                   
          }
       }
      </Mutation>
@@ -115,24 +124,17 @@ class FormDialog extends React.Component {
   }
 }
 
-/* WRAPPED COMPONENT EXAMPLE 
-const WrappedComponent = graphql(GET_ARTICLES, {
-  props: ({ data: { loading, error, networkStatus, articles } }) => {
-    if (loading) {
-      return { loading };
+const MyEnhancedAddProductForm = withFormik({
+  mapPropsToValues: () => ({ name: '', sku: '', inventory: '' }),
+  // Custom sync validation
+  validate: values => {
+    const errors = {};
+    if (!values.name) {
+      errors.name = 'Required';
     }
-
-    if (error) {
-      return { error };
-    }
-
-    return {
-      loading: false,
-      networkStatus,
-      articles,
-    };
+    return errors;
   },
-})(Articles);
-*/
+  displayName: 'BasicForm',
+})(AddProductForm);
 
-export default withStyles(styles)(FormDialog);
+export default withStyles(styles)(MyEnhancedAddProductForm);
