@@ -264,7 +264,7 @@ class EnhancedTable extends React.Component {
     this.setState( { toggleAddForm: true });
   }
   
-  cancelAddClick = event => {
+  handleClose = event => {
     this.setState( { toggleAddForm: false });
   }
   
@@ -277,7 +277,7 @@ class EnhancedTable extends React.Component {
     return (
       <Paper className={classes.root}>
         <AddProductForm open={toggleAddForm} 
-                        cancelAddClick={this.cancelAddClick} />
+                        handleClose={this.handleClose} />
         <EnhancedTableToolbar numSelected={selected.length} 
                               onAddClick={this.addClick}                               
                               onDeleteClick={this.deleteClick} />

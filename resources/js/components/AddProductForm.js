@@ -49,10 +49,6 @@ class FormDialog extends React.Component {
     super(props);    
   };
   
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
@@ -85,6 +81,7 @@ class FormDialog extends React.Component {
           onSubmit={(values, { setSubmitting }) => {
             addProduct({ variables: { name: values.name, sku: values.sku, inventory: values.inventory } });
             setSubmitting(false);
+            this.props.handleClose();
             /*
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
@@ -106,7 +103,7 @@ class FormDialog extends React.Component {
            <div className={classes.main}>           
            <Dialog
               open={this.props.open}
-              onClose={this.props.cancelAddClick}
+              onClose={this.handleClose}
               aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Add Product</DialogTitle> 
             <DialogContent>    
@@ -122,7 +119,7 @@ class FormDialog extends React.Component {
               </button>
            </Form>
            <DialogActions>
-             <Button onClick={this.props.cancelAddClick} color="primary" variant="contained">
+             <Button onClick={this.props.handleClose} color="primary" variant="contained">
                   Cancel
              </Button>                
            </DialogActions> 
