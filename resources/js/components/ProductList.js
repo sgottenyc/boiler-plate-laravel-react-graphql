@@ -140,8 +140,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes, onDeleteClick, onAddClick, itemSelected } = props;
-
+  const { numSelected, classes, onDeleteClick, onAddClick, onSuccessDeletion, itemSelected } = props;
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -163,7 +162,7 @@ let EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {
           numSelected > 0 ? (
-          <EnhancedDeleteButton selected={itemSelected} />
+          <EnhancedDeleteButton selected={itemSelected} onSuccessDeletion={onSuccessDeletion} />
         ) : (
           <Tooltip title="Add Product">
             <IconButton aria-label="Add Product" onClick={onAddClick}>
@@ -205,6 +204,10 @@ class EnhancedTable extends React.Component {
     page: 0,
     toggleAddForm: false,
     rowsPerPage: 5,
+  };
+
+  onSuccessDeletion = event => {
+    this.setState( { selected: [] } );
   };
 
   handleRequestSort = (event, property) => {
@@ -278,6 +281,7 @@ class EnhancedTable extends React.Component {
         <EnhancedTableToolbar numSelected={selected.length} 
                               onAddClick={this.addClick}   
                               itemSelected={this.state.selected}
+                              onSuccessDeletion={this.onSuccessDeletion}
                               onDeleteClick={this.deleteClick} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">

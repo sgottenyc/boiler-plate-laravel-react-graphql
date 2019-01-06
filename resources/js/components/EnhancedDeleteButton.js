@@ -30,7 +30,7 @@ class EnhancedDeleteButton extends React.Component {
     super(props);    
   };  
   render() {
-    const {selected } = this.props;
+    const {selected, onSuccessDeletion } = this.props;
     return (
       <Mutation
         mutation={DELETE_PRODUCTS}
@@ -40,6 +40,7 @@ class EnhancedDeleteButton extends React.Component {
             <IconButton aria-label="Delete" 
             onClick={() => {
             deleteProduct({ variables: { id: selected } });            
+            onSuccessDeletion();
             }}>
               <DeleteIcon />
             </IconButton>
