@@ -18,7 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import AddProductForm from "../components/AddProductForm";
+import AddProductDialog from "../components/AddProductDialog";
 import EnhancedDeleteButton from "../components/EnhancedDeleteButton";
 
 let counter = 0;
@@ -276,8 +276,8 @@ class EnhancedTable extends React.Component {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        <AddProductForm open={toggleAddForm} 
-                        handleClose={this.handleClose} />
+        <AddProductDialog open={toggleAddForm} 
+                          handleClose={this.handleClose} />
         <EnhancedTableToolbar numSelected={selected.length} 
                               onAddClick={this.addClick}   
                               itemSelected={this.state.selected}

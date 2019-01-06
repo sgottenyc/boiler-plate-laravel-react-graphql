@@ -6,6 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import gql from 'graphql-tag';
 
+
 const DELETE_PRODUCTS = gql`
   mutation deleteProducts($id: [Int!]!) {
     deleteProducts(id: $id) @client {

@@ -11,6 +11,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Mutation } from 'react-apollo';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import gql from 'graphql-tag';
+import { withFormik } from 'formik';
 
 
 const ADD_PRODUCT = gql`
@@ -43,10 +44,14 @@ const styles = theme => ({
 });
 
 
-class FormDialog extends React.Component {
-
+class AddProductForm extends React.Component {
   constructor(props) {
     super(props);    
+    this.state = {
+      name: '',
+      sku: '',
+      inventory: ''
+    };
   };
   
   handleChange = name => event => {
@@ -55,131 +60,58 @@ class FormDialog extends React.Component {
     });
   };
 
-  /*
-  handleSubmit = (e) => {
-   
+  clearForm = () => {
+    this.state = { name: '', sku: '', inventory: ''};
   };
-  */
 
   render() {
-    const { classes, open, cancelAddClick } = this.props;
+    const { classes, open, handleClose, handleSubmit, isSubmitting } = this.props;
     return (
-      <Mutation mutation={ADD_PRODUCT}>
+      <Mutation mutation={ADD_PRODUCT} {...this.props}>
        {(addProduct, { data }) => {
-         return (
-          <Formik initialValues={{ name: '', sku: '' , inventory: ''}}
-           validate={values => {
-            let errors = {};
-            if (!values.name) {
-              errors.name = 'Required';
-            } 
-            if (!values.name) {
-              sku.name = 'Required';
-            } 
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            addProduct({ variables: { name: values.name, sku: values.sku, inventory: values.inventory } });
-            setSubmitting(false);
-            this.props.handleClose();
-            /*
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
-            */
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            /* and other goodies */
-          }) => (
-           <div className={classes.main}>           
-           <Dialog
-              open={this.props.open}
-              onClose={this.handleClose}
-              aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add Product</DialogTitle> 
-            <DialogContent>    
-             <Form>              
-              <Field type="name" name="name" label="Name" /> <br />
-              <ErrorMessage name="name" component="div" />
-              SKU: <Field type="sku" name="sku" /> <br />
-              <ErrorMessage name="sku" component="div" />
-              Inventory: <Field type="inventory" name="inventory" /> <br/>
-              <ErrorMessage name="inventory" component="div" />            
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
-           </Form>
-           <DialogActions>
-             <Button onClick={this.props.handleClose} color="primary" variant="contained">
-                  Cancel
-             </Button>                
-           </DialogActions> 
-           </DialogContent>
-           </Dialog> 
-           </div>
-          )}
-        </Formik>
-
-          /*
-          <form id="addProductForm" onSubmit={ e => {
-            e.preventDefault();
-            debugger;
-            addProduct({ variables: { name: "23232"} });            
-          }}
-          >
-          <div className={classes.main}>
-            <Button color="primary" className={classes.add} variant="contained" onClick={this.handleClickOpen}>
-              Add Product
-            </Button>
-            <Dialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              aria-labelledby="form-dialog-title"
-            >
-              <DialogTitle id="form-dialog-title">Add Product</DialogTitle>
-              <DialogContent>            
-                <TextField
+         return (          
+              <form onSubmit={ (values, actions) => {
+                    event.preventDefault();
+                    addProduct( { variables: { name: this.state.name, 
+                                               sku: this.state.sku, 
+                                               inventory: this.state.inventory,
+                                               __typename: 'Product'} } );
+                    this.props.handleClose();
+                    return false;
+               }}>      
+               <TextField
                   autoFocus
                   margin="dense"
                   id="name"
+                  onChange={this.handleChange('name')}
+                  ref={input => { this.nameInput = input;  }}
                   label="Name"
                   fullWidth
                 />
                 <TextField
                   margin="dense"
                   id="sku"
+                  onChange={this.handleChange('sku')}
                   label="SKU"
                   fullWidth
                 /> 
                 <TextField
                   margin="dense"
                   id="inventory"
+                  onChange={this.handleChange('inventory')}
                   label="Inventory"
                   fullWidth
                 /> 
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.handleClose} color="primary" variant="contained">
+              <DialogActions>                
+                <Button onClick={handleClose} color="primary" variant="contained">
                   Cancel
-                </Button>
-                <Button onClick={this.handleSubmit} color="secondary" variant="contained">
-                    Save
-                </Button>
+               </Button>
+              <button type="submit" disabled={isSubmitting}>
+                  Submit
+                </button>
               </DialogActions>
-            </Dialog>
-          </div>
-          </form>
-          */
-          )
+           </form>           
+          )                   
          }
       }
      </Mutation>
@@ -187,24 +119,23 @@ class FormDialog extends React.Component {
   }
 }
 
-/* WRAPPED COMPONENT EXAMPLE 
-const WrappedComponent = graphql(GET_ARTICLES, {
-  props: ({ data: { loading, error, networkStatus, articles } }) => {
-    if (loading) {
-      return { loading };
+const MyEnhancedAddProductForm = withFormik({
+  mapPropsToValues: () => ({ name: '', sku: '', inventory: '' }),
+  // Custom sync validation
+  validate: values => {
+    const errors = {};
+    if (!values.name) {
+      errors.name = 'Required';
     }
-
-    if (error) {
-      return { error };
-    }
-
-    return {
-      loading: false,
-      networkStatus,
-      articles,
-    };
+    return errors;
   },
-})(Articles);
-*/
+  onSubmit: (values, actions) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
+        }, 1000);
+  },
+  displayName: 'BasicForm',
+})(AddProductForm);
 
-export default withStyles(styles)(FormDialog);
+export default withStyles(styles)(MyEnhancedAddProductForm);
