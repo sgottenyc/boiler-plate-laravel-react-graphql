@@ -44,17 +44,13 @@ const styles = theme => ({
 
 
 class FormDialog extends React.Component {
-  state = {
-    open: false,
-    name: ''
-  };
 
+  constructor(props) {
+    super(props);    
+  };
+  
   handleClickOpen = () => {
     this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
   };
 
   handleChange = name => event => {
@@ -70,7 +66,7 @@ class FormDialog extends React.Component {
   */
 
   render() {
-    const { classes } = this.props;
+    const { classes, open, cancelAddClick } = this.props;
     return (
       <Mutation mutation={ADD_PRODUCT}>
        {(addProduct, { data }) => {
@@ -89,7 +85,6 @@ class FormDialog extends React.Component {
           onSubmit={(values, { setSubmitting }) => {
             addProduct({ variables: { name: values.name, sku: values.sku, inventory: values.inventory } });
             setSubmitting(false);
-            this.handleClose();
             /*
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
@@ -108,15 +103,11 @@ class FormDialog extends React.Component {
             isSubmitting,
             /* and other goodies */
           }) => (
-           <div className={classes.main}> 
-           <Button color="primary" className={classes.add} variant="contained" onClick={this.handleClickOpen}>
-              Add Product
-            </Button> 
+           <div className={classes.main}>           
            <Dialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              aria-labelledby="form-dialog-title"
-            >
+              open={this.props.open}
+              onClose={this.props.cancelAddClick}
+              aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Add Product</DialogTitle> 
             <DialogContent>    
              <Form>              
@@ -131,7 +122,7 @@ class FormDialog extends React.Component {
               </button>
            </Form>
            <DialogActions>
-             <Button onClick={this.handleClose} color="primary" variant="contained">
+             <Button onClick={this.props.cancelAddClick} color="primary" variant="contained">
                   Cancel
              </Button>                
            </DialogActions> 

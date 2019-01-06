@@ -18,6 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import AddProductForm from "../components/AddProductForm";
 
 let counter = 0;
 function createData(name, sku, inventory) {
@@ -138,7 +139,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
+  const { numSelected, classes, onDeleteClick, onAddClick } = props;
 
   return (
     <Toolbar
@@ -162,13 +163,13 @@ let EnhancedTableToolbar = props => {
         {
           numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
+            <IconButton aria-label="Delete" onClick={onDeleteClick}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
         ) : (
           <Tooltip title="Add Product">
-            <IconButton aria-label="Add Product">
+            <IconButton aria-label="Add Product" onClick={onAddClick}>
               <AddIcon />
             </IconButton>
           </Tooltip>
@@ -205,17 +206,16 @@ class EnhancedTable extends React.Component {
     selected: [],
     data: [],
     page: 0,
+    toggleAddForm: false,
     rowsPerPage: 5,
   };
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
-
     if (this.state.orderBy === property && this.state.order === 'desc') {
       order = 'asc';
     }
-
     this.setState({ order, orderBy });
   };
 
@@ -256,15 +256,31 @@ class EnhancedTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  deleteClick = event => {
+    alert(this.state.selected);
+  }
+  
+  addClick = event => {
+    this.setState( { toggleAddForm: true });
+  }
+  
+  cancelAddClick = event => {
+    this.setState( { toggleAddForm: false });
+  }
+  
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
     const { classes, data } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { order, orderBy, selected, rowsPerPage, page, toggleAddForm } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <AddProductForm open={toggleAddForm} 
+                        cancelAddClick={this.cancelAddClick} />
+        <EnhancedTableToolbar numSelected={selected.length} 
+                              onAddClick={this.addClick}                               
+                              onDeleteClick={this.deleteClick} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead

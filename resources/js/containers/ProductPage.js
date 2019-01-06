@@ -173,8 +173,7 @@ const client = new ApolloClient({
 class App extends Component {
   render () {
     return (
-      <ApolloProvider client={client}>
-        <AddProductForm />
+      <ApolloProvider client={client}>        
         <Query query={GET_PRODUCTS}>
             {({ data }) => (<ProductList data={data.products} />) }
          </Query>
