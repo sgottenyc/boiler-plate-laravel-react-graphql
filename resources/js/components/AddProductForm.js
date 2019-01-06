@@ -64,13 +64,18 @@ class AddProductForm extends React.Component {
     this.state = { name: '', sku: '', inventory: ''};
   };
 
+  onClickHandler = (e) => {
+    let form = this;
+    debugger;
+  };
+
   render() {
-    const { classes, open, handleClose, handleSubmit, isSubmitting } = this.props;
+    const { classes, open, handleClose, handleSubmit, submitForm, isSubmitting } = this.props;
     return (
       <Mutation mutation={ADD_PRODUCT} {...this.props}>
        {(addProduct, { data }) => {
          return (          
-              <form onSubmit={ (values, actions) => {
+              <form ref="myForm" onSubmit={ (values, actions) => {
                     event.preventDefault();
                     addProduct( { variables: { name: this.state.name, 
                                                sku: this.state.sku, 
@@ -106,9 +111,9 @@ class AddProductForm extends React.Component {
                 <Button onClick={handleClose} color="primary" variant="contained">
                   Cancel
                </Button>
-              <button type="submit" disabled={isSubmitting}>
+               <Button type="submit" color="secondary" variant="contained">
                   Submit
-                </button>
+               </Button>             
               </DialogActions>
            </form>           
           )                   
@@ -128,12 +133,6 @@ const MyEnhancedAddProductForm = withFormik({
       errors.name = 'Required';
     }
     return errors;
-  },
-  onSubmit: (values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 1000);
   },
   displayName: 'BasicForm',
 })(AddProductForm);
