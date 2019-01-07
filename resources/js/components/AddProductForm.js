@@ -88,7 +88,9 @@ class AddProductForm extends React.Component {
                   autoFocus
                   margin="dense"
                   id="name"
+                  required
                   onChange={this.handleChange('name')}
+                  helperText="Please enter the title of your product"
                   ref={input => { this.nameInput = input;  }}
                   label="Name"
                   fullWidth
@@ -96,6 +98,7 @@ class AddProductForm extends React.Component {
                 <TextField
                   margin="dense"
                   id="sku"
+                  required
                   onChange={this.handleChange('sku')}
                   label="SKU"
                   fullWidth
@@ -125,14 +128,21 @@ class AddProductForm extends React.Component {
 }
 
 const MyEnhancedAddProductForm = withFormik({
-  mapPropsToValues: () => ({ name: '', sku: '', inventory: '' }),
+  mapPropsToValues: (values, props) => ({ name: '', sku: '', inventory: '' }, props),
   // Custom sync validation
   validate: values => {
+    debugger;
     const errors = {};
     if (!values.name) {
       errors.name = 'Required';
     }
+    if (!Number.isInteger(values.inventory)) {
+      errors.inventory = 'Inventory must be an integer value';
+    }
     return errors;
+  },
+  handleSubmit: (values, { setSubmitting }) => {
+    alert('i am submitting');
   },
   displayName: 'BasicForm',
 })(AddProductForm);
