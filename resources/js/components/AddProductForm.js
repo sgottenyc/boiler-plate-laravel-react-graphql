@@ -84,7 +84,7 @@ class AddProductForm extends React.Component {
               onSubmit={(values, actions) => {
                 debugger;
                 event.preventDefault();
-                addProduct( { variables: { name: value.name, sku: value.sku, inventory: value.inventory, __typename: 'Product'} } );
+                addProduct( { variables: { name: values.name, sku: values.sku, inventory: values.inventory, __typename: 'Product'} } );
                 this.props.handleClose();
                 return false;
               }}
