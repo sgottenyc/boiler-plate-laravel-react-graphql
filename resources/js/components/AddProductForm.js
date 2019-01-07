@@ -12,7 +12,7 @@ import { Mutation } from 'react-apollo';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import gql from 'graphql-tag';
 import { withFormik } from 'formik';
-
+import * as Yup from 'yup';
 
 const ADD_PRODUCT = gql`
   mutation addProduct($name: name!, $sku: sku, $inventory: inventory) {
@@ -43,6 +43,15 @@ const styles = theme => ({
   },
 });
 
+/* Below does not work because values object not set */
+const ProductSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Required'),
+  sku: Yup.string()    
+    .required('Required'),
+  inventory: Yup.number().min(0)
+});
+
 
 class AddProductForm extends React.Component {
   constructor(props) {
@@ -70,25 +79,29 @@ class AddProductForm extends React.Component {
   };
 
   render() {
-    const { classes, open, handleClose, handleSubmit, submitForm, isSubmitting } = this.props;
+    const { classes, open, handleClose } = this.props;
     return (
       <Mutation mutation={ADD_PRODUCT} {...this.props}>
        {(addProduct, { data }) => {
-         return (          
-              <form ref="myForm" onSubmit={ (values, actions) => {
-                    event.preventDefault();
-                    addProduct( { variables: { name: this.state.name, 
-                                               sku: this.state.sku, 
-                                               inventory: this.state.inventory,
-                                               __typename: 'Product'} } );
-                    this.props.handleClose();
-                    return false;
-               }}>      
+         return ( 
+              <Formik
+              initialValues={{ name:'', sku:'', inventory: '' }}
+              onSubmit={(values, actions) => {
+                debugger;
+                event.preventDefault();
+                addProduct( { variables: { name: this.state.name, sku: this.state.sku, inventory: this.state.inventory, __typename: 'Product'} } );
+                this.props.handleClose();
+                return false;
+              }}
+              render={ props => (         
+              <form ref="myForm" onSubmit={props.handleSubmit}>      
                <TextField
                   autoFocus
                   margin="dense"
                   id="name"
+                  required
                   onChange={this.handleChange('name')}
+                  helperText="Please enter the title of your product"
                   ref={input => { this.nameInput = input;  }}
                   label="Name"
                   fullWidth
@@ -96,17 +109,19 @@ class AddProductForm extends React.Component {
                 <TextField
                   margin="dense"
                   id="sku"
+                  required
                   onChange={this.handleChange('sku')}
                   label="SKU"
                   fullWidth
                 /> 
                 <TextField
                   margin="dense"
-                  id="inventory"
+                  id="inventory"                  
                   onChange={this.handleChange('inventory')}
                   label="Inventory"
                   fullWidth
-                /> 
+                />
+                 {props.errors.inventory && props.inventory && <div>{errors.inventory}</div>}
               <DialogActions>                
                 <Button onClick={handleClose} color="primary" variant="contained">
                   Cancel
@@ -115,7 +130,9 @@ class AddProductForm extends React.Component {
                   Submit
                </Button>             
               </DialogActions>
-           </form>           
+           </form> 
+            )}
+            /> //render prop function          
           )                   
          }
       }
@@ -124,17 +141,37 @@ class AddProductForm extends React.Component {
   }
 }
 
+/* EXAMPLE USING withFormIK HOC. Removed because formIk should be next to form so that mutation function can be passed 
+   down and invoke when form completed validation.
+   TO DO: Break form into a separate component so that the proper mutation function can be pass down,
+          Possibly pass down two mutation, one for update and one for create
+
 const MyEnhancedAddProductForm = withFormik({
-  mapPropsToValues: () => ({ name: '', sku: '', inventory: '' }),
+  mapPropsToValues: (values, props) => ({ name: '', sku: '', inventory: '' }, props),
   // Custom sync validation
   validate: values => {
+    debugger;
     const errors = {};
     if (!values.name) {
       errors.name = 'Required';
     }
+    if (!Number.isInteger(values.inventory)) {
+      errors.inventory = 'Inventory must be an integer value';
+    }
     return errors;
+  },
+  handleSubmit: (values, formikBag) => {
+    debugger;
+    event.preventDefault();
+    formikBag.props.addProduct( { variables: { name: this.state.name, 
+                                sku: this.state.sku, 
+                                inventory: this.state.inventory,
+                                __typename: 'Product'} } );
+    this.props.handleClose();
+    return false;
   },
   displayName: 'BasicForm',
 })(AddProductForm);
+*/
 
-export default withStyles(styles)(MyEnhancedAddProductForm);
+export default withStyles(styles)(AddProductForm);
