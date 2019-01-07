@@ -55,12 +55,7 @@ const ProductSchema = Yup.object().shape({
 
 class AddProductForm extends React.Component {
   constructor(props) {
-    super(props);    
-    this.state = {
-      name: '',
-      sku: '',
-      inventory: ''
-    };
+    super(props);        
   };
   
   handleChange = name => event => {
@@ -70,7 +65,7 @@ class AddProductForm extends React.Component {
   };
 
   clearForm = () => {
-    this.state = { name: '', sku: '', inventory: ''};
+    //this.state = { name: '', sku: '', inventory: ''};
   };
 
   onClickHandler = (e) => {
@@ -79,30 +74,36 @@ class AddProductForm extends React.Component {
   };
 
   render() {
-    const { classes, open, handleClose } = this.props;
+    const { classes, open, handleClose } = this.props;    
     return (
       <Mutation mutation={ADD_PRODUCT} {...this.props}>
        {(addProduct, { data }) => {
          return ( 
               <Formik
-              initialValues={{ name:'', sku:'', inventory: '' }}
+              initialValues={{ name:'', sku:'', inventory: '' }}             
               onSubmit={(values, actions) => {
                 debugger;
                 event.preventDefault();
-                addProduct( { variables: { name: this.state.name, sku: this.state.sku, inventory: this.state.inventory, __typename: 'Product'} } );
+                addProduct( { variables: { name: value.name, sku: value.sku, inventory: value.inventory, __typename: 'Product'} } );
                 this.props.handleClose();
                 return false;
               }}
-              render={ props => (         
+              >
+              { (props) => {
+              const change = (name, e) => {
+                e.persist();
+                props.handleChange(e);
+                props.setFieldTouched(name, true, false);
+              };
+              return (         
               <form ref="myForm" onSubmit={props.handleSubmit}>      
                <TextField
                   autoFocus
                   margin="dense"
                   id="name"
                   required
-                  onChange={this.handleChange('name')}
+                  onChange={change.bind(null, "name")}
                   helperText="Please enter the title of your product"
-                  ref={input => { this.nameInput = input;  }}
                   label="Name"
                   fullWidth
                 />
@@ -121,7 +122,7 @@ class AddProductForm extends React.Component {
                   label="Inventory"
                   fullWidth
                 />
-                 {props.errors.inventory && props.inventory && <div>{errors.inventory}</div>}
+                 { props.errors.inventory && props.inventory && <div>{ errors.inventory}</div>}
               <DialogActions>                
                 <Button onClick={handleClose} color="primary" variant="contained">
                   Cancel
@@ -131,8 +132,8 @@ class AddProductForm extends React.Component {
                </Button>             
               </DialogActions>
            </form> 
-            )}
-            /> //render prop function          
+              )}}
+           </Formik>                 
           )                   
          }
       }
