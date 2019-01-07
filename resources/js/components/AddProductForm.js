@@ -111,14 +111,14 @@ class AddProductForm extends React.Component {
                   margin="dense"
                   id="sku"
                   required
-                  onChange={this.handleChange('sku')}
+                  onChange={change.bind(null, "sku")}
                   label="SKU"
                   fullWidth
                 /> 
                 <TextField
                   margin="dense"
                   id="inventory"                  
-                  onChange={this.handleChange('inventory')}
+                  onChange={change.bind(null, "inventory")}
                   label="Inventory"
                   fullWidth
                 />
