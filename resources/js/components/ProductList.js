@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import CreateIcon from '@material-ui/icons/Create';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AddProductDialog from "../components/AddProductDialog";
 import EnhancedDeleteButton from "../components/EnhancedDeleteButton";
@@ -74,6 +75,7 @@ class EnhancedTableHead extends React.Component {
               onChange={onSelectAllClick}
             />
           </TableCell>
+          <TableCell>Action</TableCell>
           {rows.map(row => {
             return (
               <TableCell
@@ -203,6 +205,7 @@ class EnhancedTable extends React.Component {
     data: [],
     page: 0,
     toggleAddForm: false,
+    toggleEditForm: false,
     rowsPerPage: 5,
   };
 
@@ -268,6 +271,12 @@ class EnhancedTable extends React.Component {
     this.setState( { toggleAddForm: false });
   }
   
+  handleEditClick = event => {
+    //event.preventDefault();
+    event.stopPropagation();
+    this.setState( { toggleAddForm: true });
+  }
+  
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
@@ -312,6 +321,9 @@ class EnhancedTable extends React.Component {
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
+                      <TableCell>
+                        <CreateIcon onClick={this.handleEditClick} />
+                      </TableCell>                     
                       <TableCell align="left" component="th" scope="row" padding="none">
                         {n.name}
                       </TableCell>

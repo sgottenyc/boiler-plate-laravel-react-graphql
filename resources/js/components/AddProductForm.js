@@ -43,16 +43,6 @@ const styles = theme => ({
   },
 });
 
-/* Below does not work because values object not set */
-const ProductSchema = Yup.object().shape({
-  name: Yup.string()
-    .required('Required'),
-  sku: Yup.string()    
-    .required('Required'),
-  inventory: Yup.number().min(0)
-});
-
-
 class AddProductForm extends React.Component {
   constructor(props) {
     super(props);        
@@ -78,9 +68,21 @@ class AddProductForm extends React.Component {
     return (
       <Mutation mutation={ADD_PRODUCT} {...this.props}>
        {(addProduct, { data }) => {
+         /* Below does not work because values object not set
+            For number, make sure to add strict otherwise not work because 1A evaluate to true
+         */
+        const ProductSchema = Yup.object().shape({
+          name: Yup.string().required('Required'),
+          sku: Yup.string().required('Required'),
+          inventory: Yup.number()
+                         .positive()
+                         .integer()
+                         .typeError('Inventory must be a positive ${type}.')
+        });
          return ( 
               <Formik
-              initialValues={{ name:'', sku:'', inventory: '' }}             
+              initialValues={{ name:'', sku:'', inventory: '' }} 
+              validationSchema={ProductSchema}
               onSubmit={(values, actions) => {
                 debugger;
                 event.preventDefault();
@@ -117,12 +119,13 @@ class AddProductForm extends React.Component {
                 /> 
                 <TextField
                   margin="dense"
-                  id="inventory"                  
+                  id="inventory" 
+                  error={ props.errors.inventory && props.touched.inventory ? true: false}                  
                   onChange={change.bind(null, "inventory")}
+                  helperText={props.errors.inventory && props.touched.inventory ? props.errors.inventory : null}
                   label="Inventory"
                   fullWidth
                 />
-                 { props.errors.inventory && props.inventory && <div>{ errors.inventory}</div>}
               <DialogActions>                
                 <Button onClick={handleClose} color="primary" variant="contained">
                   Cancel

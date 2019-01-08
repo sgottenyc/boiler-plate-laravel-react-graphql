@@ -31,12 +31,6 @@ class AddProductDialog extends React.Component {
     super(props);    
   };
   
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-  
   render() {
     const { classes, open, handleClose } = this.props;
     return (
