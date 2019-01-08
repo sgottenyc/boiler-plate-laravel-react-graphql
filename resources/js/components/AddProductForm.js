@@ -85,7 +85,7 @@ class AddProductForm extends React.Component {
               validationSchema={ProductSchema}
               onSubmit={(values, actions) => {
                 debugger;
-                event.preventDefault();
+                //event.preventDefault();
                 addProduct( { variables: { name: values.name, sku: values.sku, inventory: values.inventory, __typename: 'Product'} } );
                 this.props.handleClose();
                 return false;

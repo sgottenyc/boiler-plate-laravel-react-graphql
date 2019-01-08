@@ -9,6 +9,7 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
+    "browserslist": "> 0.25%, not dead",
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
         "axios": "^0.18",
@@ -28,6 +29,7 @@
     },
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.2.3",
+        "@babel/polyfill": "^7.2.5",
         "@material-ui/core": "^3.7.1",
         "@material-ui/icons": "^3.0.1",
         "apollo-boost": "^0.1.23",
