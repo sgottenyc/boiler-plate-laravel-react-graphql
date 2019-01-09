@@ -55,3 +55,6 @@ This project will demostrate how to integrate these technologies together to bui
 ## Guide to Unit Test with PHPunit
 * Set path environment variable to point to php unit (windows: set PATH=%PATH%;C:\path-to-project\vendor\bin )
 * Run "phpunit" 
+
+## Testing Front End
+* In this project we will test with Jest.  See "https://jestjs.io/en/"
