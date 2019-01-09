@@ -18,5 +18,3 @@ mix.react('resources/js/checkout.js', 'public/js');
 mix.react('resources/js/dashboard.js', 'public/js');
 mix.react('resources/js/register.js', 'public/js');
 mix.react('resources/js/product.js', 'public/js');
-
-

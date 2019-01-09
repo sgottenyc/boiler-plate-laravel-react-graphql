@@ -47,21 +47,6 @@ class AddProductForm extends React.Component {
   constructor(props) {
     super(props);        
   };
-  
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
-  clearForm = () => {
-    //this.state = { name: '', sku: '', inventory: ''};
-  };
-
-  onClickHandler = (e) => {
-    let form = this;
-    debugger;
-  };
 
   render() {
     const { classes, open, handleClose } = this.props;    
@@ -84,8 +69,7 @@ class AddProductForm extends React.Component {
               initialValues={{ name:'', sku:'', inventory: '' }} 
               validationSchema={ProductSchema}
               onSubmit={(values, actions) => {
-                debugger;
-                //event.preventDefault();
+                //debugger;               
                 addProduct( { variables: { name: values.name, sku: values.sku, inventory: values.inventory, __typename: 'Product'} } );
                 this.props.handleClose();
                 return false;
