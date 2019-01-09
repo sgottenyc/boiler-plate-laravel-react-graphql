@@ -7,7 +7,10 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage --colors"
     },
     "browserslist": "> 0.25%, not dead",
     "devDependencies": {
@@ -16,6 +19,8 @@
         "babel-preset-react": "^6.24.1",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
+        "enzyme": "^3.8.0",
+        "enzyme-adapter-react-16": "^1.7.1",
         "jest": "^23.6.0",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
@@ -36,6 +41,7 @@
         "apollo-boost": "^0.1.23",
         "apollo-client": "^2.4.8",
         "apollo-link-state": "^0.4.2",
+        "babel-core": "^6.26.3",
         "babel-jest": "^23.6.0",
         "babel-preset-env": "^1.7.0",
         "formik": "^1.4.1",
@@ -50,6 +56,7 @@
         "redux": "^4.0.1",
         "redux-immutable-state-invariant": "^2.1.0",
         "redux-thunk": "^2.3.0",
+        "regenerator-runtime": "^0.13.1",
         "whatwg-fetch": "^3.0.0",
         "yup": "^0.26.6"
     }

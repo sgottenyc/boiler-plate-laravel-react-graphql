@@ -58,3 +58,5 @@ This project will demostrate how to integrate these technologies together to bui
 
 ## Testing Front End
 * In this project we will test with Jest.  See "https://jestjs.io/en/"
+* set PATH=%PATH%;C:\path-to-project\node_modules\.bin
+* Read this on how to setup jest https://medium.freecodecamp.org/how-to-set-up-jest-enzyme-like-a-boss-8455a2bc6d56
