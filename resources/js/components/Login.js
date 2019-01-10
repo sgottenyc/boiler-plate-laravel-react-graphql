@@ -51,6 +51,7 @@ function SignIn(props) {
 
   return (
     <div className={classes.main}>
+    <Example name="my Example" description="My description" />
       <CssBaseline />
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
