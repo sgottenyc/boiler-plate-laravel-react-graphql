@@ -37,7 +37,8 @@ export default class Example extends React.Component {
 
 /*** USE PROP TYPES TO DEFINE DEFAULTS */
 Example.propTypes = {
-    name: PropTypes.object.isRequired
+    name: PropTypes.string.isRequired,
+    initialCount: PropTypes.number
 };
 
 /** SET DEFAULT STARTING VALUES */

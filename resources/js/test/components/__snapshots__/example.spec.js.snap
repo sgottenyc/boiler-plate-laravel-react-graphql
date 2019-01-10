@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Example 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="row justify-content-center"
+  >
+    <div
+      className="col-md-8"
+    >
+      <div
+        className="card"
+      >
+        <div
+          className="card-header"
+        >
+          I am example
+        </div>
+        <div
+          className="card-body"
+          onClick={[Function]}
+        >
+          Number of times clicked 
+          0
+          .
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
