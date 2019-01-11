@@ -2,6 +2,9 @@ import React from 'react';
 import Example from '../../components/Example';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+configure({ adapter: new Adapter() });
 
 test('Render Example', () => {
   const component = renderer.create(
@@ -11,15 +14,19 @@ test('Render Example', () => {
   expect(tree).toMatchSnapshot();
 });
 
-/* Example for testing with enzyme
-test('Example changes after click', () => {
+/* To Do: Example for testing with enzyme */
+test('Example Initial State', () => {
   // Render a checkbox with label in the document
   const example = shallow(<Example name="I am example" />);
-
-  expect(checkbox.text()).toEqual('Off');
-
-  example.find('input').simulate('click');
-
-  expect(checkbox.text()).toEqual('On');
+  const text = example.find('div.card-body').text();
+  expect(text).toEqual("Number of times clicked 0.");
 });
-*/
+
+/* To Do: Example for testing with enzyme */
+test('Example Click Once', () => {
+  // Render a checkbox with label in the document
+  const example = shallow(<Example name="I am example" />);
+  example.find('div.card-body').simulate('click');
+  const text = example.find('div.card-body').text();
+  expect(text).toEqual("Number of times clicked 1.");
+});

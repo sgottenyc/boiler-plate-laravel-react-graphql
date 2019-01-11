@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 /*
  *  JSX Below will create this component
  *  <Example title="" initialCount="0"/>
@@ -13,7 +14,6 @@ export default class Example extends React.Component {
     }
     onClick() {
         this.setState( { timesClicked: this.state.timesClicked + 1 });
-        alert('i clicked');
     }    
     render() {
         const { name, description } = this.props;       // destructure props object to local variable for use in jsx render function
