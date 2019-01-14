@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import PropTypes from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -29,10 +28,9 @@ const styles = theme => ({
 class AddProductDialog extends React.Component {
   constructor(props) {
     super(props);    
-  };
-  
+  }  
   render() {
-    const { classes, open, handleClose } = this.props;
+    const { classes, handleClose } = this.props;
     return (
          <div className={classes.main}>           
            <Dialog
@@ -48,4 +46,13 @@ class AddProductDialog extends React.Component {
     );
   }
 }
+
+
+AddProductDialog.propTypes = {
+  classes: PropTypes.object.isRequired,
+  open: PropTypes.object.isRequired,
+  handleClose: PropTypes.object.isRequired,
+};
+
+
 export default withStyles(styles)(AddProductDialog);

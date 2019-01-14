@@ -15,18 +15,11 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import CreateIcon from '@material-ui/icons/Create';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AddProductDialog from "../components/AddProductDialog";
 import EnhancedDeleteButton from "../components/EnhancedDeleteButton";
-
-let counter = 0;
-function createData(name, sku, inventory) {
-  counter += 1;
-  return { id: counter, name, sku, inventory };
-}
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -42,7 +35,7 @@ function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
+    if (order !== 0) { return order; }
     return a[1] - b[1];
   });
   return stabilizedThis.map(el => el[0]);

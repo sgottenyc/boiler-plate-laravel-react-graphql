@@ -1,11 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { Mutation } from 'react-apollo';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import gql from 'graphql-tag';
-
+import PropTypes from 'react';
 
 const DELETE_PRODUCTS = gql`
   mutation deleteProducts($id: [Int!]!) {
@@ -15,21 +14,10 @@ const DELETE_PRODUCTS = gql`
    }
 `;
 
-const GET_PRODUCTS = gql`
-  query GetProducts {
-    products @client {
-      id
-      name
-      sku
-      inventory
-    }
-  }
-`;
-
 class EnhancedDeleteButton extends React.Component {
   constructor(props) {
     super(props);    
-  };  
+  }
   render() {
     const {selected, onSuccessDeletion } = this.props;
     return (
@@ -49,8 +37,13 @@ class EnhancedDeleteButton extends React.Component {
         )}
       </Mutation>
     );
-};
- 
+  }
 }
+
+EnhancedDeleteButton.propTypes = {
+  selected: PropTypes.object.isRequired,
+  onSuccessDeletion: PropTypes.object.isRequired
+};
+
 
 export default EnhancedDeleteButton;
