@@ -6,9 +6,7 @@ import Checkout from './../components/Checkout'
 class CheckoutPage extends Component {
   render () {
     return (
-        <div>
-          <Checkout />
-        </div>
+      <Checkout />
     )
   }
 }

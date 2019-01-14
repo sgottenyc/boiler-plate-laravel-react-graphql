@@ -1,6 +1,9 @@
 node_modules/
-build
-my-app*
-packages/react-scripts/template
-packages/react-scripts/fixtures
-fixtures/
+app
+public
+routes
+storage
+tests
+database
+config
+bootstrap
