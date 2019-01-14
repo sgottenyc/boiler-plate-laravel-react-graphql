@@ -1,17 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import Input from '@material-ui/core/Input';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Mutation } from 'react-apollo';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import gql from 'graphql-tag';
-import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
 const ADD_PRODUCT = gql`
@@ -46,10 +41,10 @@ const styles = theme => ({
 class AddProductForm extends React.Component {
   constructor(props) {
     super(props);        
-  };
+  }
 
   render() {
-    const { classes, open, handleClose } = this.props;    
+    const { handleClose } = this.props;    
     return (
       <Mutation mutation={ADD_PRODUCT} {...this.props}>
        {(addProduct, { data }) => {
@@ -68,7 +63,7 @@ class AddProductForm extends React.Component {
               <Formik
               initialValues={{ name:'', sku:'', inventory: '' }} 
               validationSchema={ProductSchema}
-              onSubmit={(values, actions) => {
+              onSubmit={(values) => {
                 //debugger;               
                 addProduct( { variables: { name: values.name, sku: values.sku, inventory: values.inventory, __typename: 'Product'} } );
                 this.props.handleClose();
@@ -82,7 +77,7 @@ class AddProductForm extends React.Component {
                 props.setFieldTouched(name, true, false);
               };
               return (         
-              <form ref="myForm" onSubmit={props.handleSubmit}>      
+              <form onSubmit={props.handleSubmit}>      
                <TextField
                   autoFocus
                   margin="dense"
@@ -161,5 +156,12 @@ const MyEnhancedAddProductForm = withFormik({
   displayName: 'BasicForm',
 })(AddProductForm);
 */
+
+/*** USE PROP TYPES TO DEFINE DEFAULTS */
+AddProductForm.propTypes = {
+  classes: PropTypes.object,
+  open: PropTypes.object,
+  handleClose: PropTypes.object
+};
 
 export default withStyles(styles)(AddProductForm);
