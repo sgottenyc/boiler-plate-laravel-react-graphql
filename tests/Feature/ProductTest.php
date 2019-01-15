@@ -17,7 +17,7 @@ class ProductTest extends TestCase
   
     public function testCreateProduct() {
         $query = 'mutation product {
-                                      createProductMutation(name:"TestCreate", sku:"1a", inventory:0) {
+                                      createProduct(name:"TestCreate", sku:"1a", inventory:0) {
                                         name,
                                         sku,
                                         inventory
@@ -25,7 +25,7 @@ class ProductTest extends TestCase
                                     }';
 
         $expected = '{                     
-                        "createProductMutation": {
+                        "createProduct": {
                           "name": "TestCreate",
                           "sku": "1a",
                           "inventory": 0
@@ -75,13 +75,13 @@ class ProductTest extends TestCase
     public function testUpdateProduct() {
        $findProduct = Product::where('name', "TestCreate")->first();
        $query = 'mutation {  
-                    updateProductMutation(id: ' . $findProduct->id . ', inventory: 100) {
+                    updateProduct(id: ' . $findProduct->id . ', inventory: 100) {
                       inventory
                     }
                  }';
 
         $expected = '{                     
-                         "updateProductMutation": {
+                         "updateProduct": {
                             "inventory": "100"
                           }                    
                     }';
@@ -100,29 +100,21 @@ class ProductTest extends TestCase
     public function testDeleteProducts() {
        $findProduct = Product::where('name', "TestCreate")->first();
        $query = 'mutation {  
-                    deleteProductMutation(id: ' . $findProduct->id . ') {
+                    deleteProduct(id: ' . $findProduct->id . ') {
                       name
                     }
                  }';
-
-        $expected = '{                     
-                         "deleteProductMutation": {
-                            "name": "TestCreate"
-                          }                    
-                    }';
-      
-        $expected = json_decode($expected,true);
-          
+               
         $response =  $this->post('/graphql', [
             'query' => $query
         ]);
       
         $response->assertStatus(200);
-        $result = $response->json("data");;    
-        $this->assertEquals($expected, $result);  
-      
-    }
 
-    
-    
+        $checkExists = Product::where('name', "TestCreate")->count();
+
+        //Check to see if product exists
+        
+        $this->assertEquals(0, $checkExists);        
+    }    
 }
