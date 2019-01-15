@@ -104,9 +104,9 @@ return [
             ],
             'mutation' => [
                // 'example_mutation'  => ExampleMutation::class,
-               'createProductMutation' => App\GraphQL\Mutation\CreateProductMutation::class,
-               'deleteProductMutation' => App\GraphQL\Mutation\DeleteProductMutation::class,   
-               'updateProductMutation' => App\GraphQL\Mutation\UpdateProductMutation::class,                 
+               'createProduct' => App\GraphQL\Mutation\CreateProductMutation::class,
+               'deleteProduct' => App\GraphQL\Mutation\DeleteProductMutation::class,   
+               'updateProduct' => App\GraphQL\Mutation\UpdateProductMutation::class,                 
             ],
             'middleware' => [],
             'method' => ['get', 'post'],
