@@ -47,7 +47,7 @@ class AddProductForm extends React.Component {
     const { handleClose } = this.props;    
     return (
       <Mutation mutation={ADD_PRODUCT} {...this.props}>
-       {(addProduct, { data }) => {
+       {(addProduct) => {
          /* Below does not work because values object not set
             For number, make sure to add strict otherwise not work because 1A evaluate to true
          */
@@ -160,8 +160,10 @@ const MyEnhancedAddProductForm = withFormik({
 /*** USE PROP TYPES TO DEFINE DEFAULTS */
 AddProductForm.propTypes = {
   classes: PropTypes.object,
-  open: PropTypes.object,
-  handleClose: PropTypes.object
+  open: PropTypes.bool,
+  handleClose: PropTypes.func
 };
+
+
 
 export default withStyles(styles)(AddProductForm);

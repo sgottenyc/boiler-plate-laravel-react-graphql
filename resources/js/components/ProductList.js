@@ -135,7 +135,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes, onDeleteClick, onAddClick, onSuccessDeletion, itemSelected } = props;
+  const { numSelected, classes, onAddClick, onSuccessDeletion, itemSelected } = props;
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -202,7 +202,7 @@ class EnhancedTable extends React.Component {
     rowsPerPage: 5,
   };
 
-  onSuccessDeletion = event => {
+  onSuccessDeletion = () => {
     this.setState( { selected: [] } );
   };
 
@@ -252,15 +252,15 @@ class EnhancedTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  deleteClick = event => {
+  deleteClick = () => {
     alert(this.state.selected);
   }
   
-  addClick = event => {
+  addClick = () => {
     this.setState( { toggleAddForm: true });
   }
   
-  handleClose = event => {
+  handleClose = () => {
     this.setState( { toggleAddForm: false });
   }
   
@@ -353,8 +353,17 @@ class EnhancedTable extends React.Component {
   }
 }
 
+EnhancedTableToolbar.propTypes = {
+  onSuccessDeletion: PropTypes.func,
+  itemSelected: PropTypes.array,
+  onAddClick: PropTypes.func
+}
+
 EnhancedTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
+  onSuccessDeletion: PropTypes.func,
+  itemSelected: PropTypes.object,
+  data: PropTypes.array
 };
 
 EnhancedTable.defaultProps = {

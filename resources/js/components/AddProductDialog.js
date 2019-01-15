@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'react';
+import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -24,7 +24,6 @@ const styles = theme => ({
   },
 });
 
-
 class AddProductDialog extends React.Component {
   constructor(props) {
     super(props);    
@@ -47,11 +46,17 @@ class AddProductDialog extends React.Component {
   }
 }
 
-
 AddProductDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
-  open: PropTypes.object.isRequired,
-  handleClose: PropTypes.object.isRequired,
+  classes: PropTypes.object,
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
+};
+
+
+AddProductDialog.defaultProps = {
+  classes:{},
+  open: false,
+  handleClose: function(){},
 };
 
 
