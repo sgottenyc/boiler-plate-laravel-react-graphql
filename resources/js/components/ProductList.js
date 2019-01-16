@@ -200,6 +200,7 @@ class EnhancedTable extends React.Component {
     toggleAddForm: false,
     toggleEditForm: false,
     rowsPerPage: 5,
+    currentItem: 0
   };
 
   onSuccessDeletion = () => {
@@ -264,21 +265,24 @@ class EnhancedTable extends React.Component {
     this.setState( { toggleAddForm: false });
   }
   
-  handleEditClick = event => {
-    //event.preventDefault();
+  handleEditClick = (event,id) => {
     event.stopPropagation();
-    this.setState( { toggleAddForm: true });
+    this.setState( { 
+      toggleAddForm: true,
+      currentItem: id
+    });
   }
   
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
     const { classes, data } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page, toggleAddForm } = this.state;
+    const { order, orderBy, selected, rowsPerPage, page, toggleAddForm, currentItem } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
         <AddProductDialog open={toggleAddForm} 
+                          currentItem={currentItem}
                           handleClose={this.handleClose} />
         <EnhancedTableToolbar numSelected={selected.length} 
                               onAddClick={this.addClick}   
@@ -315,7 +319,7 @@ class EnhancedTable extends React.Component {
                         <Checkbox checked={isSelected} />
                       </TableCell>
                       <TableCell>
-                        <CreateIcon onClick={this.handleEditClick} />
+                        <CreateIcon onClick={ event => this.handleEditClick(event, n.id)} />
                       </TableCell>                     
                       <TableCell align="left" component="th" scope="row" padding="none">
                         {n.name}
