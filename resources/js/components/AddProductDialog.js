@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -25,27 +24,19 @@ const styles = theme => ({
   },
 });
 
-
 class AddProductDialog extends React.Component {
   constructor(props) {
     super(props);    
-  };
-  
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-  
+  }  
   render() {
-    const { classes, open, handleClose } = this.props;
+    const { classes, handleClose, currentItem } = this.props;
     return (
          <div className={classes.main}>           
            <Dialog
               open={this.props.open}
               onClose={this.handleClose}
               aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Add Product</DialogTitle> 
+              <DialogTitle id="form-dialog-title">{ currentItem > 0 ? 'Edit Product': 'Add Product' }</DialogTitle> 
               <DialogContent> 
               <AddProductForm handleClose={handleClose} />
             </DialogContent>
@@ -54,4 +45,21 @@ class AddProductDialog extends React.Component {
     );
   }
 }
+
+AddProductDialog.propTypes = {
+  classes: PropTypes.object,
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
+  currentItem: PropTypes.number
+};
+
+
+AddProductDialog.defaultProps = {
+  classes:{},
+  open: false,
+  handleClose: function(){},
+  currentItem: 0
+};
+
+
 export default withStyles(styles)(AddProductDialog);

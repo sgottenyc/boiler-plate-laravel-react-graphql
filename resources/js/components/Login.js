@@ -12,7 +12,6 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   main: {
@@ -50,7 +49,7 @@ function SignIn(props) {
   const { classes } = props;
 
   return (
-    <main className={classes.main}>
+    <div className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -93,7 +92,7 @@ function SignIn(props) {
           </Button>
         </form>
       </Paper>
-    </main>
+    </div>
   );
 }
 

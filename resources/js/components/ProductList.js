@@ -15,17 +15,11 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import CreateIcon from '@material-ui/icons/Create';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AddProductDialog from "../components/AddProductDialog";
 import EnhancedDeleteButton from "../components/EnhancedDeleteButton";
-
-let counter = 0;
-function createData(name, sku, inventory) {
-  counter += 1;
-  return { id: counter, name, sku, inventory };
-}
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -41,7 +35,7 @@ function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
+    if (order !== 0) { return order; }
     return a[1] - b[1];
   });
   return stabilizedThis.map(el => el[0]);
@@ -74,6 +68,7 @@ class EnhancedTableHead extends React.Component {
               onChange={onSelectAllClick}
             />
           </TableCell>
+          <TableCell>Action</TableCell>
           {rows.map(row => {
             return (
               <TableCell
@@ -140,7 +135,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes, onDeleteClick, onAddClick, onSuccessDeletion, itemSelected } = props;
+  const { numSelected, classes, onAddClick, onSuccessDeletion, itemSelected } = props;
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -203,10 +198,12 @@ class EnhancedTable extends React.Component {
     data: [],
     page: 0,
     toggleAddForm: false,
+    toggleEditForm: false,
     rowsPerPage: 5,
+    currentItem: 0
   };
 
-  onSuccessDeletion = event => {
+  onSuccessDeletion = () => {
     this.setState( { selected: [] } );
   };
 
@@ -256,27 +253,36 @@ class EnhancedTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  deleteClick = event => {
+  deleteClick = () => {
     alert(this.state.selected);
   }
   
-  addClick = event => {
+  addClick = () => {
     this.setState( { toggleAddForm: true });
   }
   
-  handleClose = event => {
+  handleClose = () => {
     this.setState( { toggleAddForm: false });
+  }
+  
+  handleEditClick = (event,id) => {
+    event.stopPropagation();
+    this.setState( { 
+      toggleAddForm: true,
+      currentItem: id
+    });
   }
   
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
     const { classes, data } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page, toggleAddForm } = this.state;
+    const { order, orderBy, selected, rowsPerPage, page, toggleAddForm, currentItem } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
         <AddProductDialog open={toggleAddForm} 
+                          currentItem={currentItem}
                           handleClose={this.handleClose} />
         <EnhancedTableToolbar numSelected={selected.length} 
                               onAddClick={this.addClick}   
@@ -312,6 +318,9 @@ class EnhancedTable extends React.Component {
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
+                      <TableCell>
+                        <CreateIcon onClick={ event => this.handleEditClick(event, n.id)} />
+                      </TableCell>                     
                       <TableCell align="left" component="th" scope="row" padding="none">
                         {n.name}
                       </TableCell>
@@ -348,8 +357,17 @@ class EnhancedTable extends React.Component {
   }
 }
 
+EnhancedTableToolbar.propTypes = {
+  onSuccessDeletion: PropTypes.func,
+  itemSelected: PropTypes.array,
+  onAddClick: PropTypes.func
+}
+
 EnhancedTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
+  onSuccessDeletion: PropTypes.func,
+  itemSelected: PropTypes.object,
+  data: PropTypes.array
 };
 
 EnhancedTable.defaultProps = {

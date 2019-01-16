@@ -1,0 +1,9 @@
+node_modules/
+app
+public
+routes
+storage
+tests
+database
+config
+bootstrap

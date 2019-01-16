@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
-import { defaults, resolvers } from "../resolvers/productResolver";
 import ProductList from "../components/ProductList";
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
