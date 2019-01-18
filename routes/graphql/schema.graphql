@@ -6,11 +6,11 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 type Query {
     products: [Product!]! @all
-    product(id: ID @eq): Product @find(model: "App\\Models\\Product")
+    product(id: ID @eq, name: String @eq): Product @find(model: "App\\Models\\Product")
 }
 
 type Mutation {
-    addProduct(
+    createProduct(
         name: String @rules(apply: ["required"])
         sku: String @rules(apply: ["required"])
         inventory: Int
@@ -19,10 +19,10 @@ type Mutation {
         id: ID @rules(apply: ["required"])
         name: String,
         sku: String,
-     inventory: Int,
+        inventory: Int,
     ): Product @update(model: "App\\Models\\Product")
     deleteProduct(
-        id: ID @rules(apply: ["required"])
+        id: ID! @rules(apply: ["required"])
     ): Product @delete(model: "App\\Models\\Product")
 }
 
