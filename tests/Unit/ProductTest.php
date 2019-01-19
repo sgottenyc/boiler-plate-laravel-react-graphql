@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Product;
+use App\Models\Product;
 
 class ProductTest extends TestCase
 {
@@ -39,28 +39,28 @@ class ProductTest extends TestCase
         ]);
       
         $response->assertStatus(200);
-        $result = $response->json("data");;    
+
+        $result = $response->json("data");
+
         $this->assertEquals($expected, $result);
       
     }
   
     public function testListProducts()
     {
-        $query = '{  products(name:"TestCreate") { 
-                                 name,
-                                 inventory,
-                                 sku,
-                              }}';
+        $query = '{  product(name:"TestCreate") { 
+                        name,
+                        inventory,
+                        sku,
+                    }}';
 
-        $expected = '{                     
-                        "products": [
-                          {
-                            "name": "TestCreate",
-                            "inventory": 0,
-                            "sku": "1a"
-                          }
-                        ]                      
-                    }';
+        $expected = '{
+              "product": {
+                "name": "TestCreate",
+                "inventory": 0,
+                "sku": "1a"
+              }
+          }';
         $expected = json_decode($expected,true);
           
         $response =  $this->post('/graphql', [
@@ -68,7 +68,7 @@ class ProductTest extends TestCase
         ]);
       
         $response->assertStatus(200);
-        $result = $response->json("data");;    
+        $result = $response->json("data"); 
         $this->assertEquals($expected, $result);                  
     }
   
