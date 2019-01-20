@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 const GET_PRODUCTS = gql`
   query GetProducts {
-    products @client {
+    products {
       id
       name
       sku
@@ -18,6 +18,7 @@ const GET_PRODUCTS = gql`
 `;
 
 
+/*For use with client storage
 const productTypeDefs = `
   type Product {
     id: Int!
@@ -34,8 +35,9 @@ const productTypeDefs = `
     products: [Product]
   }
 `;
+*/
 
-let nextProductId = 7;
+//let nextProductId = 7;
 
 /* TEST
 mutation update {
@@ -48,25 +50,19 @@ mutation update {
 }
 */
 
+/* USING CLIENT STATE 
 const client = new ApolloClient({
   clientState: {
     defaults: {
       isConnected: true,
-      products: [ 
-        { id: 1, name: 'yahoo1', sku: '1a', inventory: 10, __typename: 'Product'},
-        { id: 2, name: 'yahoo2', sku: '1b', inventory: 11, __typename: 'Product'},
-        { id: 3, name: 'yahoo3', sku: '1c', inventory: 12, __typename: 'Product'},
-        { id: 4, name: 'yahoo4', sku: '1d', inventory: 13, __typename: 'Product'},
-        { id: 5, name: 'yahoo5', sku: '1e', inventory: 14, __typename: 'Product'},                 
-        { id: 6, name: 'yahoo6', sku: '1f', inventory: 15, __typename: 'Product'},                          
-     ]
+      products: []
     },
     resolvers: {
       Mutation: {
          deleteProducts: (_, { id }, { cache }) => {
           const query = gql`
                               query GetProducts {
-                                products @client {
+                                products  {
                                   id
                                   name
                                   sku
@@ -74,18 +70,7 @@ const client = new ApolloClient({
                                 }
                               }
                             `;
-            //Get the data and save it to previous
-            //debugger;
-            const previous = cache.readQuery({ query });
-           /* TEST WITH 
-           mutation delete {
-                deleteProducts(id: [1,2,3]) @client {
-                  id
-                  name
-                } 
-              }
-          */
-
+           
            for (let y=0; y < id.length; y++) 
            {
               let currentProductIndex = previous.products.findIndex(x => x.id === id[y]);
@@ -105,7 +90,7 @@ const client = new ApolloClient({
         updateProduct: (_, { id, name, sku, inventory }, { cache }) => {
             const query = gql`
                               query GetProducts {
-                                products @client {
+                                products {
                                   id
                                   name
                                   sku
@@ -132,7 +117,7 @@ const client = new ApolloClient({
         addProduct: (_, { name, sku, inventory }, { cache }) => {
             const query = gql`
                               query GetProducts {
-                                products @client {
+                                products  {
                                   id
                                   name
                                   sku
@@ -158,17 +143,11 @@ const client = new ApolloClient({
     typeDefs: productTypeDefs
   }
 });
-
-/*
-const client = new ApolloClient({
-  uri: `/graphql`,
-  clientState: {
-    defaults,
-    resolvers,
-    productTypeDefs
-  }
-});
 */
+
+const client = new ApolloClient({
+  uri: `/graphql`
+});
 
 class App extends Component {
   render () {

@@ -10,7 +10,7 @@ type Query {
 }
 
 type Mutation {
-    createProduct(
+    addProduct(
         name: String @rules(apply: ["required"])
         sku: String @rules(apply: ["required"])
         inventory: Int

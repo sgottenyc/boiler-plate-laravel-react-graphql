@@ -10,14 +10,25 @@ import gql from 'graphql-tag';
 import * as Yup from 'yup';
 
 const ADD_PRODUCT = gql`
-  mutation addProduct($name: name!, $sku: sku, $inventory: inventory) {
-    addProduct(name: $name, sku: $sku, inventory: $inventory) @client {
+  mutation addProduct($name: String!, $sku: String, $inventory: Int) {
+    addProduct(name: $name, sku: $sku, inventory: $inventory) {
       id
       name
       sku
       inventory
     }
    }
+`;
+
+const GET_PRODUCTS = gql`
+  query GetProducts {
+    products {
+      id
+      name
+      sku
+      inventory
+    }
+  }
 `;
 
 const styles = theme => ({  
@@ -46,7 +57,17 @@ class AddProductForm extends React.Component {
   render() {
     const { handleClose } = this.props;    
     return (
-      <Mutation mutation={ADD_PRODUCT} {...this.props}>
+      <Mutation mutation={ADD_PRODUCT} {...this.props}
+      update={(cache, { data: { addProduct } }) => {
+        debugger;  // eslint-disable-line
+        const { products } = cache.readQuery({ query: GET_PRODUCTS });
+        cache.writeQuery({
+          query: GET_PRODUCTS,
+          data: { products: products.concat([addProduct]) },
+        });
+      }}
+      
+      >
        {(addProduct) => {
          /* Below does not work because values object not set
             For number, make sure to add strict otherwise not work because 1A evaluate to true
