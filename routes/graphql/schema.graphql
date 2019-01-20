@@ -24,6 +24,9 @@ type Mutation {
     deleteProduct(
         id: ID! @rules(apply: ["required"])
     ): Product @delete(model: "App\\Models\\Product")
+    deleteProducts(
+        id: [ID]! @rules(apply: ["required"])
+    ): Product @delete(model: "App\\Models\\Product")
 }
 
 type Product {

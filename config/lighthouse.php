@@ -95,11 +95,11 @@ return [
     */
     'namespaces' => [
         'models' => 'App\\Models',
-        'queries' => 'App\\Http\\GraphQL\\Queries',
-        'mutations' => 'App\\Http\\GraphQL\\Mutations',
-        'interfaces' => 'App\\Http\\GraphQL\\Interfaces',
-        'unions' => 'App\\Http\\GraphQL\\Unions',
-        'scalars' => 'App\\Http\\GraphQL\\Scalars',
+        'queries' => 'App\\GraphQL\\Queries',
+        'mutations' => 'App\\GraphQL\\Mutations',
+        'interfaces' => 'App\\GraphQL\\Interfaces',
+        'unions' => 'App\\GraphQL\\Unions',
+        'scalars' => 'App\\GraphQL\\Scalars',
     ],
 
     /*

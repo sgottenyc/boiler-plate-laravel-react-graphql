@@ -7,12 +7,13 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
 const DELETE_PRODUCTS = gql`
-  mutation deleteProducts($id: [Int!]!) {
-    deleteProducts(id: $id) @client {
-      id
+  mutation deleteProducts($id: [ID]!) {
+    deleteProducts(id: $id)  {
+      sku
     }
    }
 `;
+
 
 class EnhancedDeleteButton extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class EnhancedDeleteButton extends React.Component {
     const {selected, onSuccessDeletion } = this.props;
     return (
       <Mutation
-        mutation={DELETE_PRODUCTS}
+        mutation={DELETE_PRODUCTS}        
       >
         {deleteProduct => (          
           <Tooltip title="Delete Selected">

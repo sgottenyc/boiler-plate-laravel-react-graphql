@@ -58,8 +58,7 @@ class AddProductForm extends React.Component {
     const { handleClose } = this.props;    
     return (
       <Mutation mutation={ADD_PRODUCT} {...this.props}
-      update={(cache, { data: { addProduct } }) => {
-        debugger;  // eslint-disable-line
+      update={(cache, { data: { addProduct } }) => {        
         const { products } = cache.readQuery({ query: GET_PRODUCTS });
         cache.writeQuery({
           query: GET_PRODUCTS,
@@ -84,8 +83,7 @@ class AddProductForm extends React.Component {
               <Formik
               initialValues={{ name:'', sku:'', inventory: '' }} 
               validationSchema={ProductSchema}
-              onSubmit={(values) => {
-                //debugger;               
+              onSubmit={(values) => {                           
                 addProduct( { variables: { name: values.name, sku: values.sku, inventory: values.inventory, __typename: 'Product'} } );
                 this.props.handleClose();
                 return false;
