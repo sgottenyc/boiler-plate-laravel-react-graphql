@@ -36,9 +36,9 @@ class AddProductDialog extends React.Component {
               open={this.props.open}
               onClose={this.handleClose}
               aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">{ currentItem > 0 ? 'Edit Product': 'Add Product' }</DialogTitle> 
+              <DialogTitle id="form-dialog-title">{ currentItem !== {} ? 'Edit Product': 'Add Product' }</DialogTitle> 
               <DialogContent> 
-              <AddProductForm handleClose={handleClose} />
+              <AddProductForm currentItem={currentItem} handleClose={handleClose} />
             </DialogContent>
            </Dialog> 
         </div>
@@ -50,7 +50,7 @@ AddProductDialog.propTypes = {
   classes: PropTypes.object,
   open: PropTypes.bool,
   handleClose: PropTypes.func,
-  currentItem: PropTypes.number
+  currentItem: PropTypes.object
 };
 
 
@@ -58,7 +58,7 @@ AddProductDialog.defaultProps = {
   classes:{},
   open: false,
   handleClose: function(){},
-  currentItem: 0
+  currentItem: {}
 };
 
 

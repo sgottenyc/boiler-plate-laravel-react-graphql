@@ -81,7 +81,7 @@ class AddProductForm extends React.Component {
         });
          return ( 
               <Formik
-              initialValues={{ name:'', sku:'', inventory: '' }} 
+              initialValues={this.props.currentItem} 
               validationSchema={ProductSchema}
               onSubmit={(values) => {                           
                 addProduct( { variables: { name: values.name, sku: values.sku, inventory: values.inventory, __typename: 'Product'} } );
@@ -180,6 +180,7 @@ const MyEnhancedAddProductForm = withFormik({
 AddProductForm.propTypes = {
   classes: PropTypes.object,
   open: PropTypes.bool,
+  currentItem: PropTypes.object,
   handleClose: PropTypes.func
 };
 

@@ -200,7 +200,7 @@ class EnhancedTable extends React.Component {
     toggleAddForm: false,
     toggleEditForm: false,
     rowsPerPage: 5,
-    currentItem: 0
+    currentItem: {}
   };
 
   onSuccessDeletion = () => {
@@ -265,11 +265,11 @@ class EnhancedTable extends React.Component {
     this.setState( { toggleAddForm: false });
   }
   
-  handleEditClick = (event,id) => {
+  handleEditClick = (event,n) => {
     event.stopPropagation();
     this.setState( { 
       toggleAddForm: true,
-      currentItem: id
+      currentItem: n
     });
   }
   
@@ -319,7 +319,7 @@ class EnhancedTable extends React.Component {
                         <Checkbox checked={isSelected} />
                       </TableCell>
                       <TableCell>
-                        <CreateIcon onClick={ event => this.handleEditClick(event, n.id)} />
+                        <CreateIcon onClick={ event => this.handleEditClick(event, n)} />
                       </TableCell>                     
                       <TableCell align="left" component="th" scope="row" padding="none">
                         {n.name}
