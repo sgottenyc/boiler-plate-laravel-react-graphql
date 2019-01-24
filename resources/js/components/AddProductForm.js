@@ -105,6 +105,7 @@ class AddProductForm extends React.Component {
                   onChange={change.bind(null, "name")}
                   helperText="Please enter the title of your product"
                   label="Name"
+                  value={props.values.name}
                   fullWidth
                 />
                 <TextField
@@ -114,6 +115,7 @@ class AddProductForm extends React.Component {
                   onChange={change.bind(null, "sku")}
                   label="SKU"
                   fullWidth
+                  value={props.values.sku}
                 /> 
                 <TextField
                   margin="dense"
@@ -122,6 +124,7 @@ class AddProductForm extends React.Component {
                   onChange={change.bind(null, "inventory")}
                   helperText={props.errors.inventory && props.touched.inventory ? props.errors.inventory : null}
                   label="Inventory"
+                  value={props.values.inventory}
                   fullWidth
                 />
               <DialogActions>                

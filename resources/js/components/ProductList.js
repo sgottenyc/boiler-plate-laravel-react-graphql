@@ -258,7 +258,7 @@ class EnhancedTable extends React.Component {
   }
   
   addClick = () => {
-    this.setState( { toggleAddForm: true });
+    this.setState( { toggleAddForm: true, currentItem: { name: '', inventory: '', sku: ''} });
   }
   
   handleClose = () => {
